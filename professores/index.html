@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Professores Virtuais | MSP</title>
+<meta name="description" content="Um professor particular de cada matéria, a qualquer hora. Escolha a matéria, escolha o método, copie e estude.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Krona+One&family=Montserrat:wght@600&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#0c0b09; --bg2:#14120e; --card:#1a1712; --card2:#221e17; --line:#2f2a20; --fg:#f3ecdd; --muted:#a59a83;
+  --gold:#d6ac4c; --gold-hi:#f4d27c; --gold-lo:#8a6a24;
+  --paper:#fbf8f1; --paper2:#f3ede0; --ink:#14120e; --ink2:#5b5446; --rule:#e4dccb;
+  --ok:#2f7d4f;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left))}
+button{font:inherit;cursor:pointer}
+a{color:inherit}
+
+/* topo */
+.hero{background:var(--bg);color:var(--fg);position:relative;overflow:hidden;padding:36px 0 34px}
+.hero::before{content:"";position:absolute;inset:-50% -10% auto;height:520px;background:radial-gradient(closest-side,rgba(214,172,76,.2),transparent 70%);pointer-events:none}
+.top{position:relative;display:flex;justify-content:center;margin-bottom:26px}
+.logo{display:flex;flex-direction:column;align-items:center;gap:6px;width:min(250px,70%)}
+.logo-msp{font-family:"Krona One","Arial Black",sans-serif;font-size:46px;line-height:.95;letter-spacing:.04em;color:#fff}
+.logo-sub{font-family:"Montserrat",var(--f-body);font-weight:600;font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:#fff;padding-left:.42em;white-space:nowrap}
+.logo-rule{display:flex;align-items:center;gap:8px;width:100%}
+.logo-rule span{flex:1;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold-hi) 70%,var(--gold));border-radius:2px}
+.logo-rule span:last-child{background:linear-gradient(90deg,var(--gold),var(--gold-hi) 30%,var(--gold) 70%,transparent)}
+.logo-rule svg{width:16px;height:16px;flex:none}
+.heroin{position:relative;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-num);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--gold-lo);background:rgba(214,172,76,.08);padding:7px 16px;border-radius:999px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:#5fcf8a;box-shadow:0 0 0 3px rgba(95,207,138,.2)}
+h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(40px,9vw,84px);line-height:.95;margin:16px auto 14px;max-width:900px;text-wrap:balance;
+  background:linear-gradient(180deg,#fff7e2 0%,var(--gold-hi) 45%,var(--gold) 75%,var(--gold-lo) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.heroin p{max-width:560px;margin:0 auto;color:#d9d0bb;font-size:18px}
+
+/* 3 passos */
+.how{display:grid;gap:12px;margin:-26px 0 0;position:relative;z-index:2}
+@media(min-width:760px){.how{grid-template-columns:repeat(3,1fr)}}
+.how div{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 10px 30px rgba(20,18,14,.08)}
+.how b.n{flex:none;width:38px;height:38px;border-radius:11px;background:var(--ink);color:var(--gold-hi);display:grid;place-items:center;font-family:var(--f-display);font-size:22px;font-weight:900}
+.how strong{display:block;font-size:16px}
+.how span{display:block;font-size:14px;color:var(--ink2);line-height:1.4}
+
+/* busca e filtros */
+.tools{margin:34px 0 8px}
+.search{position:relative}
+.search svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--gold-lo)}
+.search input{width:100%;font:inherit;font-size:16px;padding:15px 18px 15px 50px;border-radius:999px;border:1.5px solid var(--rule);background:#fff;color:var(--ink);outline:none}
+.search input:focus{border-color:var(--gold)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--rule);background:#fff;color:var(--ink2);padding:9px 16px;border-radius:999px;font-weight:700;font-size:14px}
+.chip small{font-family:var(--f-num);opacity:.7;margin-left:4px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--gold-hi);border-color:var(--ink)}
+.chip:focus-visible,.btn:focus-visible,.go:focus-visible,.mode:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* grade */
+.group{margin:30px 0 0}
+.group h2{display:flex;align-items:center;gap:12px;font-family:var(--f-num);font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lo);margin:0 0 14px}
+.group h2::after{content:"";flex:1;height:1px;background:var(--rule)}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:620px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:940px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1160px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border:1px solid var(--rule);border-radius:18px;padding:18px;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(20,18,14,.12);border-color:var(--gold-lo)}
+.head{display:flex;gap:14px;align-items:center}
+.av{position:relative;flex:none;width:76px;height:76px;border-radius:18px;overflow:hidden;box-shadow:0 0 0 2px var(--gold-lo),0 6px 14px rgba(0,0,0,.25)}
+.av svg{display:block;width:100%;height:100%}
+.on{position:absolute;right:5px;bottom:5px;width:11px;height:11px;border-radius:50%;background:#4fd184;border:2px solid #0c0b09}
+.head h3{margin:0;font-family:var(--f-display);font-weight:800;font-size:23px;line-height:1.02;text-transform:uppercase}
+.head small{display:block;margin-top:4px;font-family:var(--f-num);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lo)}
+.card p{margin:14px 0 10px;color:var(--ink2);font-size:15px;line-height:1.45}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tags span{font-size:12px;background:var(--paper2);color:var(--ink2);padding:4px 10px;border-radius:8px}
+.foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.go{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;background:var(--bg);color:var(--gold-hi);font-weight:800;font-size:15px;padding:12px 20px;min-height:46px;box-shadow:inset 0 0 0 1px var(--gold-lo)}
+.go:hover{background:#000;box-shadow:inset 0 0 0 1px var(--gold)}
+.go svg{width:18px;height:18px}
+.star{border:0;background:none;padding:8px;color:#c9bea5}
+.star svg{width:24px;height:24px}
+.star[aria-pressed="true"]{color:var(--gold)}
+.vazio{text-align:center;color:var(--ink2);padding:50px 0}
+
+/* painel */
+.ov{position:fixed;inset:0;background:rgba(8,7,5,.72);backdrop-filter:blur(3px);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov.open{display:flex}
+.sheet{background:var(--paper);width:100%;max-width:980px;max-height:96vh;border-radius:22px 22px 0 0;overflow:hidden;display:flex;flex-direction:column;animation:up .25s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@media(min-width:900px){.ov{align-items:center;padding:24px}.sheet{border-radius:22px;max-height:92vh}}
+.sh-top{background:var(--bg);color:var(--fg);display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--gold-lo)}
+.sh-top .av{width:52px;height:52px;border-radius:14px}
+.sh-top .on{width:9px;height:9px;right:3px;bottom:3px}
+.sh-top small{display:block;font-family:var(--f-num);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.sh-top b{display:block;font-family:var(--f-display);font-weight:800;font-size:24px;text-transform:uppercase;line-height:1.05}
+.x{margin-left:auto;border:1px solid var(--line);background:var(--bg2);color:var(--fg);width:42px;height:42px;border-radius:50%;font-size:22px;line-height:1}
+.x:hover{border-color:var(--gold)}
+.sh-body{overflow:auto;padding:20px 18px 26px;-webkit-overflow-scrolling:touch}
+.lab{font-family:var(--f-num);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-lo);margin:0 0 10px;display:flex;gap:10px;align-items:center}
+.lab b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--gold-hi);font-size:11px}
+.modes{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+@media(min-width:700px){.modes{grid-template-columns:repeat(3,1fr)}}
+.mode{text-align:left;border:0;border-radius:14px;padding:14px;background:linear-gradient(160deg,#1c1913,#0c0b09);color:var(--fg);box-shadow:inset 0 0 0 1px var(--line);display:flex;flex-direction:column;gap:6px;min-height:128px;transition:.15s}
+.mode:hover{box-shadow:inset 0 0 0 1px var(--gold-lo)}
+.mode svg{width:26px;height:26px;color:var(--gold)}
+.mode strong{font-family:var(--f-display);font-weight:800;font-size:20px;text-transform:uppercase;line-height:1.05}
+.mode span{font-size:12.5px;color:var(--muted);line-height:1.35}
+.mode[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--gold),0 0 22px rgba(214,172,76,.25);background:linear-gradient(160deg,#2a2314,#0c0b09)}
+.mode[aria-pressed="true"] strong{color:var(--gold-hi)}
+.form{display:grid;gap:12px;margin-top:6px}
+@media(min-width:700px){.form{grid-template-columns:1fr 1fr}.form .full{grid-column:1/-1}}
+.form label{font-size:13px;font-weight:800;display:block}
+.form input,.form select{width:100%;margin-top:5px;font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;color:var(--ink)}
+.form input:focus,.form select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+.sug{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sug button{border:1px solid var(--rule);background:#fff;border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
+.sug button:hover{border-color:var(--gold);color:var(--ink)}
+.sect{margin-top:24px}
+textarea{width:100%;min-height:220px;max-height:50vh;resize:vertical;font-family:var(--f-num);font-size:13px;line-height:1.65;padding:16px;border-radius:14px;border:1px solid var(--gold-lo);background:var(--bg);color:#eee6d3}
+.hint{font-size:13px;color:var(--ink2);margin:8px 0 0}
+.ias{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+@media(min-width:700px){.ias{grid-template-columns:repeat(4,1fr)}}
+.ia{border:0;border-radius:14px;padding:14px 12px;background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1a1405;font-weight:800;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-height:62px;justify-content:center}
+.ia small{font-weight:600;font-size:11.5px;opacity:.8}
+.ia:hover{filter:brightness(1.06)}
+.ia:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.only{margin-top:12px;border:1.5px solid var(--ink);background:#fff;border-radius:999px;padding:11px 22px;font-weight:800;font-size:14px;color:var(--ink)}
+.only:hover{background:var(--ink);color:var(--gold-hi)}
+.note{margin-top:16px;padding:14px 16px;border:1px solid var(--gold-lo);background:rgba(214,172,76,.1);border-radius:12px;font-size:14px;color:var(--ink2)}
+.note b{color:var(--ink)}
+
+footer{background:var(--bg);color:var(--muted);text-align:center;padding:34px 0 44px;margin-top:56px;font-size:14px}
+footer b{color:var(--gold-hi)}
+footer a{color:var(--gold-hi)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:var(--ink);color:var(--gold-hi);padding:13px 22px;border-radius:999px;font-weight:700;font-size:15px;opacity:0;pointer-events:none;transition:.25s;z-index:80;box-shadow:0 0 0 1px var(--gold-lo);max-width:92vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* card com retrato */
+.card{padding:0;overflow:hidden;background:#fff}
+.ph{position:relative;aspect-ratio:16/12;background:#030303;overflow:hidden;border-bottom:2px solid var(--gold-lo)}
+.ph svg,.ph img,.av img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform .5s ease}
+.card:hover .ph svg,.card:hover .ph img{transform:scale(1.04)}
+.ph::after{content:"";position:absolute;inset:auto 0 0;height:50%;background:linear-gradient(rgba(3,3,3,0),rgba(3,3,3,.94));pointer-events:none}
+.ph .area{position:absolute;top:12px;left:12px;z-index:1;font-family:var(--f-num);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);background:rgba(0,0,0,.6);border:1px solid var(--gold-lo);padding:5px 10px;border-radius:999px}
+.ph .live{position:absolute;top:12px;right:12px;z-index:1;display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#e8e1cf;background:rgba(0,0,0,.6);padding:5px 10px;border-radius:999px}
+.ph .live i{width:7px;height:7px;border-radius:50%;background:#4fd184;box-shadow:0 0 0 3px rgba(79,209,132,.2)}
+.ph h3{position:absolute;left:16px;right:16px;bottom:12px;z-index:1;margin:0;color:#fff;font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;text-transform:uppercase;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.cb{padding:14px 18px 18px;display:flex;flex-direction:column;flex:1}
+.cb .role{font-family:var(--f-num);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-lo)}
+.cb p{margin:6px 0 12px}
+.sh-top .av{box-shadow:0 0 0 1.5px var(--gold)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <div class="logo" role="img" aria-label="MSP Mentoria para Concursos">
+        <div class="logo-msp">MSP</div>
+        <div class="logo-sub">Mentoria para concursos</div>
+        <div class="logo-rule" aria-hidden="true"><span></span><svg viewBox="0 0 24 24"><path d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.6l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" fill="#f4d27c"/></svg><span></span></div>
+      </div>
+    </div>
+    <div class="heroin">
+      <span class="eyebrow"><i></i>Professores virtuais · 24 horas</span>
+      <h1>Um professor de cada matéria, sempre de plantão</h1>
+      <p>Escolha a matéria, escolha como quer estudar e leve o pedido pronto para a sua IA. Sem digitar nada do zero.</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="how">
+    <div><b class="n">1</b><p style="margin:0"><strong>Escolha o professor</strong><span>Um especialista para cada matéria do seu plano.</span></p></div>
+    <div><b class="n">2</b><p style="margin:0"><strong>Escolha o método</strong><span>Aula do zero, simulado, cartas, mapa e mais.</span></p></div>
+    <div><b class="n">3</b><p style="margin:0"><strong>Copie e estude</strong><span>O pedido vai pronto para o Gemini, NotebookLM, ChatGPT ou Claude.</span></p></div>
+  </div>
+
+  <div class="tools">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="busca" type="search" placeholder="Busque a matéria ou o assunto (ex.: crase, flagrante, drogas)" autocomplete="off" aria-label="Buscar matéria ou assunto"></label>
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por área"></div>
+  </div>
+
+  <div id="lista"></div>
+</main>
+
+<footer>
+  <div class="wrap"><b>MSP</b> · Mentoria para concursos<br>
+  A IA pode errar. Confira sempre o artigo na lei seca. · <a href="../prompt-duvidas/index.html">Guia de uso</a></div>
+</footer>
+
+<div class="ov" id="ov" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-nome">
+    <div class="sh-top">
+      <div class="av" id="sh-av"></div>
+      <div><small>Professor virtual</small><b id="sh-nome"></b></div>
+      <button class="x" id="fechar" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="sh-body">
+      <p class="lab"><b>1</b>Como você quer estudar?</p>
+      <div class="modes" id="modes"></div>
+
+      <div class="sect">
+        <p class="lab"><b>2</b>Seus dados</p>
+        <div class="form">
+          <label>Assunto
+            <input id="f-tema" placeholder="Ex.: Prisão em flagrante" autocomplete="off">
+            <div class="sug" id="sug"></div>
+          </label>
+          <label>Concurso ou cargo
+            <input id="f-cargo" placeholder="Ex.: Policial Rodoviário Federal" autocomplete="off">
+          </label>
+          <label class="full">Banca
+            <select id="f-banca">
+              <option value="">Todas: Cebraspe, FGV, Vunesp e Instituto AOCP</option>
+              <option>Cebraspe</option><option>FGV</option><option>Vunesp</option><option>Instituto AOCP</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="sect">
+        <p class="lab"><b>3</b>Seu pedido <span style="text-transform:none;letter-spacing:0;font-family:var(--f-body)">(pode editar)</span></p>
+        <textarea id="txt" spellcheck="false"></textarea>
+        <p class="hint" id="hint"></p>
+      </div>
+
+      <div class="sect">
+        <p class="lab"><b>4</b>Copiar e abrir a IA</p>
+        <div class="ias">
+          <button class="ia" data-ia="gemini">Gemini<small>Copia e você cola</small></button>
+          <button class="ia" data-ia="notebooklm">NotebookLM<small>Google · com seu PDF</small></button>
+          <button class="ia" data-ia="chatgpt">ChatGPT<small>Já abre com o pedido</small></button>
+          <button class="ia" data-ia="claude">Claude<small>Já abre com o pedido</small></button>
+        </div>
+        <button class="only" id="so-copiar">Só copiar o pedido</button>
+        <div class="note"><b>Como funciona:</b> no ChatGPT e no Claude, o pedido já aparece escrito na caixa de mensagem: é só tocar em enviar. No Gemini e no NotebookLM, o pedido é copiado e você cola (Ctrl+V no computador, ou segurar e tocar em Colar no celular). No NotebookLM, adicione antes o PDF do curso como fonte.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+
+/* ---------- avatares ---------- */
+var SK=["#c99a76","#a8774f","#8a5c3b","#6a4329","#4e301d"];
+function avatar(c,id){
+  var L="#d6ac4c",g="a"+id,sk=SK[c.sk],h=c.h,s="";
+  var lit=c.cam?"#6f6a55":"#5f5a52";
+  s+='<defs>'+
+   '<radialGradient id="'+g+'bg" cx="30%" cy="22%" r="95%"><stop offset="0" stop-color="#2e281d"/><stop offset=".5" stop-color="#0d0c0a"/><stop offset="1" stop-color="#020202"/></radialGradient>'+
+   '<linearGradient id="'+g+'l" x1="0" y1="0" x2="1" y2=".35"><stop offset="0" stop-color="'+lit+'"/><stop offset=".35" stop-color="#25231f"/><stop offset=".72" stop-color="#0c0c0c"/><stop offset="1" stop-color="#040404"/></linearGradient>'+
+   '<linearGradient id="'+g+'s" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="'+sk+'" stop-opacity=".9"/><stop offset=".3" stop-color="'+sk+'" stop-opacity=".45"/><stop offset=".62" stop-color="#140e09"/><stop offset="1" stop-color="#040302"/></linearGradient>'+
+   '<radialGradient id="'+g+'v" cx="45%" cy="40%" r="75%"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></radialGradient>'+
+   '<pattern id="'+g+'c" width="13" height="13" patternUnits="userSpaceOnUse" patternTransform="scale(.5)"><path d="M1 3c3-2 6 0 5 3s-5 2-5-3zM8 9c2-2 6-1 5 2s-4 3-5-2z" fill="#a0915f" opacity=".32"/><path d="M9 1c2 0 3 2 1 3s-3-2-1-3zM2 9c2-1 3 1 2 3s-3-1-2-3z" fill="#4b5736" opacity=".55"/></pattern>'+
+   '<filter id="'+g+'n" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .1 0"/></filter>'+
+  '</defs>';
+  var F='url(#'+g+'l)',CAM='url(#'+g+'c)';
+  function lay(d){return '<path d="'+d+'" fill="'+F+'"/>'+(c.cam?'<path d="'+d+'" fill="'+CAM+'"/>':'')}
+  function rim(d,o){return '<path d="'+d+'" fill="none" stroke="'+L+'" stroke-opacity="'+(o||.6)+'" stroke-width=".8" stroke-linecap="round"/>'}
+  s+='<rect width="100" height="100" fill="url(#'+g+'bg)"/>';
+  s+='<ellipse cx="14" cy="22" rx="46" ry="40" fill="'+L+'" opacity=".07"/><g transform="translate(50 62) scale(1.34) translate(-50 -56)">';
+  // rabo de cavalo
+  if(c.fem) s+='<path d="M59 40 C70 44 72 60 65 70 C63 61 59 53 56 47Z" fill="'+F+'"/>'+rim("M59 40 C66 43 69 50 69 57",.35);
+  // tronco e colete
+  var T="M3 100 C5 78 23 67 50 66 C77 67 95 78 97 100Z";
+  s+=lay(T)+rim("M3 100 C5 79 22 68 46 66.2",.55);
+  s+='<path d="M43 52 L43 66 Q50 70 57 66 L57 52Z" fill="#100e0c"/>';
+  var PC="M26 100 L28 74 Q50 68.5 72 74 L74 100Z";
+  s+=lay(PC)+'<path d="'+PC+'" fill="#000" opacity=".38"/>';
+  s+='<path d="M28.5 74.5 L33 66.5 M71.5 74.5 L67 66.5" stroke="#090909" stroke-width="4.2"/>';
+  [30.5,44.2,57.9].forEach(function(x){s+='<rect x="'+x+'" y="84" width="11.6" height="13.5" rx="1.6" fill="#121212" stroke="#000" stroke-width=".6"/><path d="M'+(x+.4)+' 85.2 h10.8" stroke="'+L+'" stroke-opacity=".3" stroke-width=".7"/>'});
+  s+='<path d="M45.6 75 h8.8 v5.6 q-4.4 3.6 -8.8 0z" fill="'+L+'" opacity=".9"/><path d="M47.3 76.4 h5.4 v3.5 q-2.7 2.2 -5.4 0z" fill="#0c0b09" opacity=".55"/>';
+  s+=rim("M26.2 99 L28 74.2 Q38 71.4 47 70.7",.45);
+  // rosto
+  s+='<ellipse cx="50" cy="41.5" rx="12.4" ry="14.4" fill="url(#'+g+'s)"/>';
+  s+=rim("M38.2 44 C38.6 50 41 54 45 55.5",.4);
+  if(c.mask){
+    s+='<path d="M37.7 43.3 Q50 46.5 62.3 43.3 C62 53 57 56.3 50 56.3 C43 56.3 38 53 37.7 43.3Z" fill="'+F+'"/><path d="M37.7 43.3 Q50 46.5 62.3 43.3 C62 53 57 56.3 50 56.3 C43 56.3 38 53 37.7 43.3Z" fill="#000" opacity=".35"/>';
+  } else {
+    s+='<path d="M38 46 C40 55.5 60 55.5 62 46 C60 52.5 40 52.5 38 46Z" fill="#000" opacity=".28"/>';
+    if(c.beard) s+='<path d="M38 44.5 C38 57.5 62 57.5 62 44.5 C59 51.5 41 51.5 38 44.5Z" fill="#0d0a07" opacity=".9"/><path d="M45 48.7 Q50 47.3 55 48.7" stroke="#0d0a07" stroke-width="1.6" fill="none"/>';
+    else s+='<path d="M46.5 50.5 Q50 51.4 53.5 50.5" stroke="#000" stroke-opacity=".5" stroke-width=".9" fill="none"/>';
+  }
+  if(c.gl&&h!=="nvgd"){
+    s+='<path d="M38 37.3 Q50 34.8 62 37.3 L61.5 42.2 Q56 44.2 51 41.7 L49 41.7 Q44 44.2 38.5 42.2Z" fill="#060606" stroke="'+L+'" stroke-opacity=".45" stroke-width=".6"/><path d="M40 38.4 L46 37.6" stroke="#fff" stroke-opacity=".35" stroke-width=".8"/>';
+  } else if(h!=="nvgd"){
+    s+='<path d="M41 37.2 Q45 35.8 48 37.2 M52 37.2 Q55 35.8 59 37.2" stroke="#000" stroke-opacity=".55" stroke-width="1.6" fill="none"/>';
+    s+='<ellipse cx="45" cy="40.2" rx="1.5" ry="1.15" fill="#050505"/><ellipse cx="55" cy="40.2" rx="1.5" ry="1.15" fill="#050505"/><circle cx="44.6" cy="39.8" r=".35" fill="#fff" opacity=".6"/>';
+  }
+  // cobertura
+  if(h==="cap"){
+    s+=lay("M36 37.5 C35 21 65 21 64 37.5Z")+rim("M36 37.5 C35.4 27 41 22 50 21.4",.65);
+    s+='<rect x="45.5" y="26" width="9" height="5" rx="1" fill="'+L+'" opacity=".8"/>';
+    s+='<path d="M33.5 37.6 Q50 43.6 66.5 37.6 Q66.5 35.4 63 35.8 L37 35.8 Q33.5 35.4 33.5 37.6Z" fill="#080808"/>'+rim("M33.6 37.6 Q42 41 50 41.2",.5);
+    s+='<path d="M35.4 41 C34 25 66 25 64.6 41" fill="none" stroke="#070707" stroke-width="2.2"/>';
+  } else {
+    s+=lay("M35.4 38.4 C34 18 66 18 64.6 38.4 Q62 33.6 57 33.1 L43 33.1 Q38 33.6 35.4 38.4Z")+rim("M35.4 38.2 C34.6 25 42 19.4 50 19.2",.75);
+    s+='<rect x="33.9" y="29" width="3.1" height="7.4" rx=".6" fill="#0a0a0a"/><rect x="63" y="29" width="3.1" height="7.4" rx=".6" fill="#070707"/>';
+    s+='<rect x="43.5" y="21.6" width="13" height="5" rx="1" fill="#000" opacity=".45"/>';
+    s+='<rect x="46.5" y="27" width="7" height="5.2" rx="1" fill="#0a0a0a" stroke="'+L+'" stroke-opacity=".25" stroke-width=".5"/>';
+    if(h==="nvgu") s+='<rect x="42.5" y="17.6" width="7" height="8" rx="2.2" fill="#0b0b0b" stroke="'+L+'" stroke-opacity=".45" stroke-width=".6"/><rect x="50.5" y="17.6" width="7" height="8" rx="2.2" fill="#080808"/><path d="M49.5 21.5 h1" stroke="#000" stroke-width="2"/>';
+  }
+  // fone
+  s+='<ellipse cx="36" cy="42.5" rx="4.3" ry="6.1" fill="#0d0d0d"/><ellipse cx="64" cy="42.5" rx="4.3" ry="6.1" fill="#070707"/>'+rim("M32.4 40.5 Q32.8 37.4 35.6 36.6",.6);
+  if(c.mic) s+='<path d="M36 47.5 Q37.5 53.6 44.5 53.8" fill="none" stroke="#0e0e0e" stroke-width="1.5"/><circle cx="45" cy="53.8" r="1.3" fill="#111"/>';
+  // visão noturna abaixada
+  if(h==="nvgd"){
+    s+='<path d="M48.5 31.5 L48.5 35 M51.5 31.5 L51.5 35" stroke="#0a0a0a" stroke-width="2.4"/>';
+    s+='<rect x="39.6" y="34" width="9.4" height="9.4" rx="2.6" fill="#0b0b0b" stroke="'+L+'" stroke-opacity=".5" stroke-width=".6"/><rect x="51" y="34" width="9.4" height="9.4" rx="2.6" fill="#070707"/>';
+    s+='<circle cx="44.3" cy="38.7" r="2.7" fill="#1a1406"/><circle cx="55.7" cy="38.7" r="2.7" fill="#120e05"/><circle cx="43.5" cy="37.9" r=".9" fill="'+L+'"/><circle cx="54.9" cy="37.9" r=".7" fill="'+L+'" opacity=".6"/>';
+  }
+  // arma
+  if(c.w==="rifle"){
+    s+='<g transform="rotate(-21 50 88)"><path d="M3 86 L20 84 L20 92 L5 93Z" fill="#0b0b0b"/><rect x="20" y="82" width="33" height="9" rx="1" fill="#0d0d0d"/><rect x="52" y="83" width="28" height="6.6" rx="1" fill="#0b0b0b"/><rect x="79" y="85" width="15" height="2.4" fill="#090909"/><path d="M36 91 L43 91 L45 103 L38 103Z" fill="#0a0a0a"/><rect x="29" y="77" width="12" height="5" rx="1.3" fill="#0a0a0a"/><path d="M3.5 85.8 L20 83.9 L20 82 L80 82.8" fill="none" stroke="'+L+'" stroke-opacity=".5" stroke-width=".6"/><path d="M29 77.2 h12" stroke="'+L+'" stroke-opacity=".5" stroke-width=".6"/></g>';
+    s+='<ellipse cx="34" cy="97" rx="5.5" ry="4" fill="#101010"/><ellipse cx="66" cy="79.5" rx="5" ry="3.6" fill="#0c0c0c"/>';
+  }
+  if(c.w==="pistol"){
+    s+='<path d="M90 100 Q90 82 78 72" fill="none" stroke="'+F+'" stroke-width="9" stroke-linecap="round"/>';
+    s+='<g transform="rotate(-10 76 66)"><rect x="73.2" y="50" width="5.2" height="16" rx="1" fill="#0a0a0a" stroke="'+L+'" stroke-opacity=".45" stroke-width=".5"/><rect x="72.4" y="63" width="7" height="10" rx="1.8" fill="#0d0d0d"/></g>';
+    s+='<ellipse cx="76.5" cy="70.5" rx="4.6" ry="4" fill="#111"/>';
+  }
+  s+='</g><rect width="100" height="100" fill="url(#'+g+'v)"/>';
+  s+='<rect width="100" height="100" filter="url(#'+g+'n)"/>';
+  return '<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">'+s+'</svg>';
+}
+
+/* ---------- matérias ---------- */
+var AREAS=["Básicas","Direito","Militar","Trânsito e PRF","Gestão e Administração"];
+var MAT=[
+ {n:"Língua Portuguesa",a:0,d:"Interpretação, gramática e as pegadinhas de redação oficial que a banca adora.",t:["Interpretação de texto","Crase","Concordância verbal","Pontuação"],c:{h:"cap",mic:1,sk:1}},
+ {n:"Raciocínio Lógico",a:0,d:"Resolve passo a passo, sem pular conta, até a lógica fazer sentido.",t:["Proposições e conectivos","Equivalências lógicas","Porcentagem","Diagramas"],c:{h:"helm",fem:1,sk:0}},
+ {n:"Direito Constitucional",a:1,d:"Direitos fundamentais, art. 144 e organização do Estado sem decoreba vazia.",t:["Direitos fundamentais","Remédios constitucionais","Segurança pública (art. 144)","Controle de constitucionalidade"],c:{h:"helm",w:"pistol",beard:1,sk:1}},
+ {n:"Direito Administrativo",a:1,d:"Atos, poderes e agentes públicos explicados com casos do dia a dia da corporação.",t:["Atos administrativos","Poderes administrativos","Agentes públicos","Improbidade"],c:{h:"cap",fem:1,gl:1,sk:2}},
+ {n:"Direito Penal",a:1,d:"Teoria do crime e crimes em espécie com exemplos de ocorrência real.",t:["Teoria do crime","Excludentes de ilicitude","Concurso de pessoas","Crimes contra a pessoa"],c:{h:"nvgd",w:"rifle",mask:1,sk:1}},
+ {n:"Direito Processual Penal",a:1,d:"Inquérito, flagrante e prisões: o processo penal que você vai aplicar na rua.",t:["Inquérito policial","Prisão em flagrante","Prisão preventiva e temporária","Provas"],c:{h:"helm",w:"rifle",gl:1,mic:1,sk:3}},
+ {n:"Legislação Penal Especial",a:1,d:"As leis que sustentam a rotina policial: drogas, armas, abuso de autoridade e mais.",t:["Lei de Drogas","Estatuto do Desarmamento","Abuso de autoridade","Organização criminosa"],c:{h:"nvgd",w:"rifle",cam:1,beard:1,sk:2}},
+ {n:"Direitos Humanos",a:1,d:"Tratados, tortura e uso da força: o que cai e como a banca cobra.",t:["Tratados internacionais","Tortura","Uso da força","Grupos vulneráveis"],c:{h:"helm",fem:1,mic:1,sk:3}},
+ {n:"Criminologia",a:1,d:"Escolas, causas do crime e prevenção, sem complicar.",t:["Escolas criminológicas","Prevenção do crime","Vitimologia","Teorias do crime"],c:{h:"nvgu",beard:1,gl:1,sk:0}},
+ {n:"Direito Penal Militar",a:2,d:"Crimes militares, hierarquia e disciplina com casos de quartel.",t:["Crime militar","Aplicação da lei penal militar","Insubordinação","Deserção"],c:{h:"helm",w:"rifle",cam:1,mask:1,sk:2}},
+ {n:"Processo Penal Militar",a:2,d:"Do inquérito policial militar à sentença, em ordem e sem mistério.",t:["Inquérito policial militar","Prisão em flagrante militar","Competência","Ação penal militar"],c:{h:"nvgu",w:"pistol",cam:1,fem:1,sk:1}},
+ {n:"Legislação da PMDF",a:2,d:"Estatuto, organização e regulamento disciplinar da PMDF.",t:["Organização básica","Estatuto dos militares","Regulamento disciplinar","Hierarquia e disciplina"],c:{h:"cap",w:"rifle",cam:1,sk:3}},
+ {n:"Legislação de Trânsito",a:3,d:"CTB sem decoreba: infrações, crimes de trânsito e processo administrativo.",t:["Infrações e penalidades","Crimes de trânsito","Processo administrativo","Pedestres"],c:{h:"helm",w:"rifle",gl:1,mic:1,sk:1}},
+ {n:"Legislação da PRF",a:3,d:"Carreira, competências e a estrutura da Polícia Rodoviária Federal.",t:["Competências da PRF","Carreira","Art. 144","Decreto 1.655"],c:{h:"nvgd",w:"rifle",beard:1,sk:2}},
+ {n:"Ética no Serviço Público",a:4,d:"Código de ética, regime disciplinar e conflito de interesses em linguagem simples.",t:["Código de ética","Regime disciplinar","Conflito de interesses","Improbidade"],c:{h:"cap",w:"pistol",fem:1,sk:0}},
+ {n:"Arquivologia",a:4,d:"Protocolo, classificação e temporalidade explicados com exemplos de delegacia.",t:["Protocolo","Classificação","Arquivamento","Temporalidade"],c:{h:"helm",gl:1,sk:4}},
+ {n:"Administração Geral",a:4,d:"Planejamento, organização e gestão de pessoas com a cara da prova.",t:["Planejamento","Organização","Gestão de pessoas","Liderança"],c:{h:"nvgu",fem:1,mic:1,sk:1}},
+ {n:"Administração Financeira e Orçamentária",a:4,d:"PPA, LDO e LOA: o orçamento público sem enrolação.",t:["PPA, LDO e LOA","Receita e despesa","Princípios orçamentários","Créditos adicionais"],c:{h:"cap",beard:1,gl:1,sk:3}},
+ {n:"Língua Inglesa",a:0,d:"Leitura e interpretação de textos em inglês, sem precisar ser fluente.",t:["Interpretação de texto","Vocabulário","Tempos verbais","Falsos cognatos"],c:{h:"cap",mic:1,fem:1,sk:2}},
+ {n:"Língua Espanhola",a:0,d:"Espanhol para prova: leitura, vocabulário e as palavras que enganam.",t:["Interpretação de texto","Heterossemânticos","Verbos","Artigos e pronomes"],c:{h:"helm",gl:1,sk:1}},
+ {n:"Informática",a:0,d:"Windows, Office, internet e segurança da informação explicados na prática.",t:["Segurança da informação","Redes e internet","Windows","Word e Excel"],c:{h:"nvgu",mic:1,gl:1,sk:3}},
+ {n:"Física",a:5,d:"Cinemática, dinâmica e energia com exemplos de viatura, frenagem e colisão.",t:["Cinemática","Leis de Newton","Energia e trabalho","Velocidade média"],c:{h:"helm",w:"rifle",beard:1,sk:0}},
+ {n:"Estatística",a:5,d:"Média, probabilidade e gráficos passo a passo, sem pular conta.",t:["Média, moda e mediana","Probabilidade","Gráficos e tabelas","Desvio padrão"],c:{h:"cap",gl:1,fem:1,sk:1}},
+ {n:"Contabilidade",a:5,d:"Patrimônio, lançamentos e balanço em linguagem simples.",t:["Patrimônio","Lançamentos contábeis","Balanço patrimonial","Contas"],c:{h:"helm",mic:1,sk:2}},
+ {n:"Geopolítica",a:5,d:"Brasil e mundo: fronteiras, conflitos e atualidades que caem na prova.",t:["Fronteiras e segurança","Conflitos atuais","Blocos econômicos","Brasil no mundo"],c:{h:"nvgd",w:"rifle",cam:1,sk:3}},
+ {n:"Legislação da PMGO",a:2,d:"Estatuto, organização e regulamento disciplinar da PMGO.",t:["Estatuto dos militares de Goiás","Organização básica","Regulamento disciplinar","Hierarquia e disciplina"],c:{h:"kepi",w:"pistol",beard:1,sk:2}}
+];
+var CAT=[["Básicas",0],["Direito",1],["Militar",2],["Legislação PRF e Trânsito",3],["Gestão e Administração",4],["Exatas e Atualidades",5]];
+var SLUG=["portugues", "raciocinio-logico", "constitucional", "administrativo", "penal", "processual-penal", "penal-especial", "direitos-humanos", "criminologia", "penal-militar", "processo-penal-militar", "pmdf", "transito", "prf", "etica", "arquivologia", "administracao-geral", "afo", "lingua-inglesa", "lingua-espanhola", "informatica", "fisica", "estatistica", "contabilidade", "geopolitica", "pmgo"];window.MSPAV=[];
+MAT.forEach(function(m,i){m.id=i;m.foto='fotos/'+SLUG[i]+'.jpg';m.svg=avatar(m.c,i);m.av='<img src="'+m.foto+'" alt="" loading="lazy" onerror="this.outerHTML=MSPAV['+i+']">';MSPAV[i]=m.svg;m.area=CAT[m.a][0]});
+
+/* ---------- métodos ---------- */
+var ICO={
+ aula:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5C6 4 9 4 12 5.5v13C9 17 6 17 3 18.5z"/><path d="M21 5.5C18 4 15 4 12 5.5v13c3-1.5 6-1.5 9 0z"/></svg>',
+ sim:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>',
+ arm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9 16H3z"/><path d="M12 10v4.5M12 17.2v.1"/></svg>',
+ cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="7" width="14" height="11" rx="2"/><path d="M7 4h13.5v11"/></svg>',
+ mapa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><circle cx="4.5" cy="5.5" r="1.7"/><circle cx="19.5" cy="5.5" r="1.7"/><circle cx="4.5" cy="18.5" r="1.7"/><circle cx="19.5" cy="18.5" r="1.7"/><path d="M10 10.2L6 6.7M14 10.2l4-3.5M10 13.8l-4 3.5M14 13.8l4 3.5"/></svg>',
+ err:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h11l3 3v14H5z"/><path d="M9.5 10l5 5M14.5 10l-5 5"/></svg>'
+};
+var MODOS=[
+ {k:"aula",n:"Aula do Zero",d:"Aula completa, do básico ao nível de prova.",i:ICO.aula},
+ {k:"sim",n:"Simulado de Banca",d:"Questões no estilo da banca, com correção comentada.",i:ICO.sim},
+ {k:"arm",n:"Armadilhas da Banca",d:"Treine para não cair nas pegadinhas.",i:ICO.arm},
+ {k:"cart",n:"Cartas de Revisão",d:"20 cartões de pergunta e resposta para revisar.",i:ICO.cart},
+ {k:"mapa",n:"Mapa Mental Visual",d:"O assunto inteiro em ramos coloridos.",i:ICO.mapa},
+ {k:"err",n:"Caderno de Erros",d:"Cole a questão que errou e entenda o motivo.",i:ICO.err}
+];
+var BANCAS="Cebraspe, FGV, Vunesp e Instituto AOCP";
+
+function P(k,v){
+  var M=v.m, C=v.cargo||"carreira policial", T=v.tema, B=v.banca;
+  var Tt=T||"o assunto que vou informar a seguir";
+  var askT=T?"":" Como ainda não informei o assunto, pergunte qual é antes de começar.";
+  var bq=B?B:BANCAS;
+  var mat="Se eu enviar material (PDF ou texto), use-o como fonte principal. Se não enviei nada, avise e use só o que tiver certeza, indicando o que eu devo conferir na lei.";
+  if(k==="aula") return [
+"Sou aluno da Mentoria MSP e estou me preparando para o concurso de "+C+" (provas no estilo "+bq+"). Atue como meu professor particular de "+M+": alguém que já foi aprovado, conhece por dentro como as bancas cobram esta matéria e corrige como examinador. Quero aprender "+Tt+" do zero, até o nível de acertar questão de prova."+askT,
+"Antes de começar, em 1 linha, diga onde esse assunto fica dentro de "+M+" e o que eu preciso já saber para entendê-lo (se for algo que um iniciante não sabe, explique o pré-requisito rapidinho).",
+"Monte a aula nesta ordem:",
+"1. A IDEIA CENTRAL. Em 3 frases, sem juridiquês, como se eu nunca tivesse estudado. Termine com uma analogia do dia a dia que eu não esqueça mais.",
+"2. OS CONCEITOS, UM POR UM. Liste todos os conceitos que eu preciso dominar, do mais básico ao mais avançado. Para cada um:\n- o que é, em 1 ou 2 frases;\n- o fundamento (artigo, súmula, regra ou fórmula);\n- a palavra-chave que a banca usa para cobrar;\n- as exceções, porque é nelas que a prova derruba.",
+"3. NA PRÁTICA. Uma ocorrência ou situação real da rotina policial, contada como um caso (quem, o que aconteceu, o que o policial faz), mostrando cada conceito acontecendo. No fim do caso, diga qual seria a resposta certa e por quê.",
+"4. O QUE A PROVA CONFUNDE. Uma tabela comparando os conceitos parecidos (colunas: conceito, o que é, fundamento, como diferenciar na hora da prova).",
+"5. NO JEITO DA BANCA. Dois exemplos de como esse assunto aparece em prova, escritos do jeito que a banca escreve, mostrando a armadilha de cada um.",
+"6. PARA FIXAR. Um mnemônico ou esquema curto para memorizar o principal.",
+"PADRÃO DE QUALIDADE (vale para toda a aula):\n- Fundamento sempre que existir: artigo, inciso e parágrafo da lei, súmula ou tese do STF/STJ, regra gramatical, fórmula ou fonte oficial, conforme a matéria. Use a redação atual e avise quando houver mudança recente que a prova costuma cobrar.\n- Se não tiver certeza de um dado, diga claramente em vez de inventar. Prefiro \"confira no texto da lei\" a uma informação errada.\n- Linguagem de sala de aula: frases curtas, palavras-chave de prova em **negrito**, nada de enrolação nem introdução genérica.\n- Sempre que fizer sentido, conecte com a rotina real do policial (abordagem, ocorrência, delegacia, quartel, trânsito).\n- "+mat,
+"No final, me faça 3 perguntas de checagem (uma conceitual, uma de Certo/Errado e uma aplicada a um caso), UMA DE CADA VEZ. Espere minha resposta antes de corrigir e de mandar a próxima. Se eu errar, reexplique só aquele ponto de outro jeito, mais simples."
+  ].join("\n\n");
+
+  if(k==="cart") return [
+"Sou aluno da Mentoria MSP e estou me preparando para o concurso de "+C+", com foco nas bancas "+bq+".",
+"Atue como professor especialista em "+M+" e examinador de concursos policiais. Transforme "+(T?"o assunto "+T:"o assunto que vou informar a seguir")+" em flashcards de revisão ativa, do nível básico ao avançado."+askT,
+"REGRAS:\n1. Crie 20 flashcards por rodada, cobrindo os pontos mais importantes e cobrados em prova.\n2. Frente: uma pergunta curta, objetiva e específica, que exija lembrar a resposta sem consultar alternativas.\n3. Verso: resposta direta, com fundamento exato (artigo, inciso, parágrafo, regra ou jurisprudência consolidada) e exceção relevante quando houver.\n4. Priorize conceitos, diferenças, prazos, competências, requisitos, exceções e pegadinhas das bancas.\n5. Inclua situações práticas da rotina policial quando pertinentes.\n6. Use linguagem simples, palavras-chave em negrito e respostas preferencialmente de até 30 palavras.\n7. Cada cartão deve testar apenas uma informação. Não repita perguntas nem crie cartões óbvios.\n8. Não invente leis, jurisprudência ou percentuais de incidência. Se houver dúvida, indique a necessidade de conferir a fonte oficial.\n9. Distribua os cartões entre conceitos fundamentais, literalidade da lei, exceções, comparações e casos práticos.\n10. Organize em formato FRENTE | VERSO, pronto para copiar ou importar no Anki, se eu pedir.",
+mat,
+"Ao final, apresente 5 pegadinhas frequentes das bancas e destaque os cartões prioritários para revisão. Aguarde meu comando para gerar a próxima rodada, sem repetir cartões anteriores."
+  ].join("\n\n");
+
+  if(k==="sim"||k==="arm"){
+    var arm=(k==="arm");
+    var bn=B||"a banca que vou escolher (pergunte-me qual: Cebraspe, FGV, Vunesp ou Instituto AOCP, antes de elaborar as questões)";
+    var out=[
+(arm?"PEDIDO MSP: ARMADILHAS DE BANCA":"PEDIDO MSP: SIMULADO DE BANCA"),
+"Atue como elaborador de provas, examinador e professor especialista em concursos de carreira policial, com profundo conhecimento do perfil de cobrança da banca "+bn+".",
+"Sou aluno da Mentoria MSP e estou me preparando para o concurso de "+C+".",
+(arm?"Elabore "+(T?"uma bateria de 10 questões":"uma bateria de 10 questões sobre o assunto que vou informar")+" de "+M+(T?" sobre "+T:"")+" em que CADA questão esconde uma armadilha típica de banca. O objetivo é me ensinar a enxergar a pegadinha antes de cair nela.":"Elabore um simulado de alto nível sobre "+M+(T?", assunto "+T:" (pergunte qual assunto antes de começar)")+", respeitando a legislação atualizada e o nível de exigência esperado para o cargo.")+" "+mat,
+"1. CARACTERÍSTICAS DAS QUESTÕES\nReproduza o estilo de cobrança da banca: linguagem e estrutura dos enunciados, nível de aprofundamento, construção das alternativas, literalidade da legislação, interpretação de dispositivos, situações hipotéticas e casos práticos, confusão entre conceitos semelhantes e exceções às regras. Não faça questões genéricas.",
+(arm?"2. QUANTIDADE E DIFICULDADE\nCrie 10 questões: 2 fáceis, 5 médias e 3 difíceis.":"2. DISTRIBUIÇÃO DO SIMULADO\n20% fáceis (conceitos fundamentais), 50% médias (interpretação, aplicação e identificação de regras) e 30% difíceis (exceções, detalhes legais, jurisprudência e situações complexas). Se eu não disser a quantidade, faça 10 questões."),
+"3. FORMATO CONFORME A BANCA\nCEBRASPE: itens de CERTO ou ERRADO, com afirmações contextualizadas, alterações sutis de dispositivos legais e inversões de regras e exceções.\nFGV: múltipla escolha, com casos concretos, interpretação aprofundada, alternativas próximas e exigência de raciocínio.\nVUNESP: múltipla escolha, com cobrança objetiva, literalidade da lei, conceitos, requisitos e detalhes que diferenciam alternativas.\nINSTITUTO AOCP: múltipla escolha, com enunciados objetivos, conhecimento normativo, aplicação dos conceitos e alternativas que exploram confusões recorrentes.\nNão misture os estilos. Siga rigorosamente o perfil da banca selecionada.",
+"4. CONSTRUÇÃO DAS PEGADINHAS\n"+(arm?"Este é o foco do pedido. ":"")+"Explore: troca de palavras que alteram o sentido; substituição de uma regra por uma exceção; generalizações indevidas (sempre, nunca, exclusivamente, obrigatoriamente); inversão de competências; alteração de prazos e requisitos; confusão entre conceitos parecidos; supressão de condições legais; aplicação incorreta de uma regra a um caso; uso de entendimento superado. As alternativas devem ser plausíveis: o candidato não pode acertar só por eliminação.",
+"5. REGRAS DE FUNDAMENTAÇÃO\nNão invente informações para completar questões. Respeite a redação atual da legislação. Identifique artigos, incisos e parágrafos usados. Se houver divergência entre o material e a legislação atual, sinalize antes. Não use jurisprudência de que não tenha certeza. Se o material for insuficiente, informe a limitação.",
+"6. APRESENTAÇÃO\nApresente primeiro todas as questões, numeradas e sem qualquer indicação da resposta. Sem dicas, comentários ou destaques que entreguem o gabarito. Depois da última questão, aguarde minha resolução e não revele o gabarito antes.",
+"7. CORREÇÃO COMENTADA (padrão examinador)\nDepois que eu responder, corrija cada questão com: minha resposta; gabarito; acerto ou erro; fundamentação legal ou teórica; explicação didática; por que a correta está certa e por que as outras estão erradas; qual foi a pegadinha usada; qual palavra ou detalhe deveria ter chamado minha atenção. No Cebraspe, diga qual trecho tornou o item errado.",
+(arm?"8. CATÁLOGO DE ARMADILHAS\nNo fim da correção, liste as armadilhas que usei, em que tipo eu mais caí, e como identificá-las rápido na hora da prova.":"8. DIAGNÓSTICO DO DESEMPENHO\nAo terminar a correção, apresente: acertos e erros; percentual de aproveitamento; desempenho por assunto; o que dominei; o que preciso revisar; tipos de pegadinha em que mais caí; erros de desconhecimento versus erros de interpretação; recomendações objetivas."),
+"9. CICLO DE EVOLUÇÃO MSP\nCom base nos meus erros, monte uma nova bateria direcionada às minhas dificuldades. Priorize os assuntos em que errei, aumente gradualmente a dificuldade e não repita questões.",
+"REGRA FINAL: atue como examinador, não como facilitador. Não suavize a dificuldade e não entregue respostas antes de eu tentar resolver."
+    ];
+    return out.join("\n\n");
+  }
+
+  if(k==="mapa") return [
+"PEDIDO MSP: MAPA MENTAL VISUAL PARA CONCURSOS POLICIAIS",
+"Atue como professor especialista em concursos policiais, designer instrucional e especialista em mapas mentais para aprendizagem e memorização.",
+"Sou aluno da Mentoria MSP e estou me preparando para o concurso de "+C+", com foco nas bancas "+bq+".",
+"Sua missão é transformar "+(T?"o assunto "+T+" de "+M:"o assunto que vou informar de "+M+" (pergunte qual é antes de começar)")+" em um MAPA MENTAL VISUAL, COMPLETO, COLORIDO E DIDÁTICO, que permita compreender, memorizar e revisar o conteúdo para provas de concursos policiais. "+mat,
+"1. IDENTIDADE VISUAL E DIAGRAMAÇÃO\nAparência profissional, moderna e organizada. Use: tema central destacado no meio; ramos principais com cores diferentes; sub-ramos hierárquicos; desenhos ilustrativos e ícones; setas e conexões; caixas de destaque para artigos importantes; símbolos para exceções, regras e pegadinhas; palavras-chave em destaque, evitando textos longos; legenda visual.\nCores com função pedagógica:\nAzul: conceitos e definições.\nVerde: regras gerais e requisitos.\nAmarelo: atenção e pontos importantes.\nVermelho: exceções, proibições e pegadinhas.\nRoxo: jurisprudência e entendimentos dos tribunais.\nLaranja: prazos, competências e procedimentos.",
+"2. ORGANIZAÇÃO DO CONTEÚDO\nCENTRO: nome do assunto principal.\nRamo 1, Conceito: definição, características, natureza, classificações.\nRamo 2, Fundamento legal: artigos, incisos, parágrafos, súmulas.\nRamo 3, Regras gerais: requisitos, condições, elementos, competências, procedimentos.\nRamo 4, Exceções: restrições, hipóteses especiais, quando a regra não se aplica.\nRamo 5, Diferenças importantes: institutos semelhantes e comparações que alteram o gabarito.\nRamo 6, Como as bancas cobram: Cebraspe, FGV, Vunesp e Instituto AOCP, com as palavras que mudam o sentido da questão.\nRamo 7, Pegadinhas: troca de conceitos, inversão de regras, generalizações, alteração de prazos, exceções esquecidas, erros recorrentes.\nRamo 8, Aplicação prática: situações da atividade policial e exemplos concretos.",
+"3. RECURSOS VISUAIS E MEMORIZAÇÃO\nNão quero só palavras dentro de caixas. Use desenhos que ajudem a memorizar: livro para a Constituição, escudo para direitos, viatura e policiais para segurança pública, algemas para prisão, balança para tribunal, relógio e calendário para prazos, alerta para proibições e exceções. Crie associações visuais, mnemônicos e pequenos esquemas.",
+"4. PRECISÃO\nNão invente artigos, incisos ou jurisprudência. Preserve os fundamentos legais. Confira a redação atual e destaque alterações relevantes. Diferencie regra geral de exceção. Não simplifique a ponto de perder precisão.",
+"5. NÍVEL DE PROFUNDIDADE\nIniciante: compreender o conceito e a estrutura. Intermediário: memorizar requisitos, classificações, regras e diferenças. Avançado: dominar exceções, jurisprudência e pegadinhas.",
+"6. FORMATO FINAL\nOrganização radial, em A3 horizontal ou equivalente, em alta resolução, com todos os textos legíveis. Se o assunto for extenso, divida em vários mapas sequenciais com a mesma identidade visual. É melhor três mapas bem organizados do que um só poluído.",
+"7. FINALIZAÇÃO MSP\nApresente: mapa mental principal; mapas complementares, se necessários; legenda das cores; cinco pontos que mais merecem atenção na prova; cinco pegadinhas que não posso esquecer."
+  ].join("\n\n");
+
+  // err
+  return [
+"PEDIDO MSP: CADERNO DE ERROS PARA CONCURSOS POLICIAIS",
+"Atue como professor especialista em concursos policiais, analista de questões e especialista em aprendizagem e recuperação ativa.",
+"Sou aluno da Mentoria MSP e estou me preparando para o concurso de "+C+", com foco nas bancas "+bq+" e outras. Disciplina das questões: "+M+(T?", assunto "+T:"")+".",
+"Vou te enviar questões que errei, acertei por chute ou resolvi com dúvida. Se eu ainda não enviei, peça agora. Sua missão é transformá-las em um CADERNO DE ERROS INTELIGENTE, OBJETIVO E DIDÁTICO. O objetivo não é copiar questões, e sim identificar o que preciso aprender para não errar de novo.",
+"1. IDENTIFICAÇÃO DO ERRO\nPara cada questão, identifique: disciplina, assunto, subassunto, banca (quando disponível), gabarito e o que a questão realmente cobra. Classifique o motivo do erro:\nFalta de conteúdo: não conhecia a informação.\nFalta de revisão: já estudei, mas esqueci.\nInterpretação: não compreendi o enunciado.\nAtenção: deixei passar uma palavra, condição ou detalhe.\nConfusão conceitual: confundi dois institutos parecidos.\nChute: acertei sem saber justificar. Acerto no chute também entra no caderno.",
+"2. MODELO DE REGISTRO\nPara cada questão, use:\n1. O que eu preciso aprender?\n2. Regra correta (simples, direta e suficiente para a prova).\n3. Onde está a pegadinha?\n4. Como não errar de novo? (dica, associação, comparação ou palavra-chave).\n5. Exemplo prático, quando necessário.\n6. Motivo do meu erro.",
+"3. PADRÃO DE EXPLICAÇÃO\nMuitos alunos da MSP começam do zero. Use linguagem simples, evite juridiquês, explique termos técnicos, use analogias, compare conceitos parecidos e destaque exceções e palavras que mudam o sentido. Sem explicações enormes: quero entender e conseguir lembrar.",
+"4. PEGADINHAS DAS BANCAS\nQuando couber, destaque: palavras absolutas (sempre, nunca, exclusivamente, somente), inversões de conceitos, troca de competências, alteração de prazos, exceções, generalizações indevidas e literalidade da lei. Explique como a banca costuma explorar o assunto.",
+"5. PRECISÃO\nNão invente leis, artigos, prazos ou jurisprudência. Indique o fundamento legal quando aplicável. Diferencie regra geral de exceção. Se houver atualização legislativa, sinalize a conferência. Se faltar informação, aponte a lacuna em vez de inventar.",
+"6. CONTEÚDO AINDA NÃO ESTUDADO\nSe a questão for de um assunto que ainda não vi, avise, explique brevemente o conceito central, não trate como deficiência de aprendizagem e oriente a aprofundar quando entrar no cronograma.",
+"7. PADRÃO VISUAL\nOrganização minimalista: fundo branco, preto no texto principal, dourado nos destaques, vermelho para erros e pegadinhas, verde para regras corretas, caixas para conceitos fundamentais, tabelas comparativas quando necessário e palavras-chave em negrito. Cada registro curto e fácil de revisar. Não copie a questão inteira.",
+"8. MÉTODO MSP\nO caderno nasce da etapa de testes e exercícios e alimenta as revisões. A lógica é: questão, erro ou dúvida, causa, registro, recuperação ativa, novas questões.",
+"9. REVISÃO\nAo revisar um registro, faça primeiro uma pergunta curta para eu responder sem consultar. Depois mostre a resposta correta, a regra e a pegadinha. Quando eu demonstrar domínio, pare de repetir explicações longas.",
+"10. QUALIDADE\nNão registre só para aumentar o caderno. Não repita conceitos. Agrupe erros parecidos. Priorize erros recorrentes e conteúdos relevantes para o concurso. Seja econômico nas palavras e completo na explicação.",
+"11. ENTREGA\nOrganize por DISCIPLINA, ASSUNTO e SUBASSUNTO. Ao final, apresente: principais conceitos que preciso aprender; erros que estou repetindo; pegadinhas que preciso memorizar; pontos que merecem revisão; perguntas rápidas para testar minha recuperação ativa.",
+"OBJETIVO: não basta corrigir a questão. É preciso corrigir o raciocínio que levou ao erro."
+  ].join("\n\n");
+}
+
+/* ---------- estado e utilidades ---------- */
+var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+var favs=[];try{favs=JSON.parse(store.get("msp-favs")||"[]")}catch(e){favs=[]}
+var filtro="Todos",q="";
+var cur=null,modo="aula";
+
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")}
+var STAR='<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l2.7 5.7 6.3.8-4.6 4.3 1.2 6.2L12 17l-5.6 3 1.2-6.2L3 9.5l6.3-.8z" fill-opacity="0"/></svg>';
+var CHAT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>';
+
+function chips(){
+  var h='<button class="chip" aria-pressed="'+(filtro==="Todos")+'" data-f="Todos">Todos<small>'+MAT.length+'</small></button>';
+  CAT.forEach(function(c){var n=MAT.filter(function(m){return m.a===c[1]}).length;
+    h+='<button class="chip" aria-pressed="'+(filtro===c[0])+'" data-f="'+c[0]+'">'+c[0]+'<small>'+n+'</small></button>'});
+  var f=favs.length; h+='<button class="chip" aria-pressed="'+(filtro==="Favoritos")+'" data-f="Favoritos">Favoritos<small>'+f+'</small></button>';
+  $("#chips").innerHTML=h;
+}
+function lista(){
+  var nq=norm(q.trim()),h="",tot=0;
+  CAT.forEach(function(c){
+    if(filtro!=="Todos"&&filtro!=="Favoritos"&&filtro!==c[0])return;
+    var ms=MAT.filter(function(m){
+      if(m.a!==c[1])return false;
+      if(filtro==="Favoritos"&&favs.indexOf(m.id)<0)return false;
+      if(!nq)return true;
+      return norm(m.n+" "+m.d+" "+m.t.join(" ")).indexOf(nq)>=0;
+    });
+    if(!ms.length)return; tot+=ms.length;
+    h+='<section class="group"><h2>'+c[0]+'</h2><div class="grid">';
+    ms.forEach(function(m){
+      var fv=favs.indexOf(m.id)>=0;
+      h+='<article class="card"><div class="ph">'+m.av+'<span class="area">'+m.area+'</span><span class="live"><i></i>Disponível</span><h3>'+m.n+'</h3></div>'+
+      '<div class="cb"><small class="role">Professor virtual</small><p>'+m.d+'</p><div class="tags">'+m.t.slice(0,3).map(function(t){return'<span>'+t+'</span>'}).join("")+'</div>'+
+      '<div class="foot"><button class="go" data-go="'+m.id+'">'+CHAT+'Acessar</button>'+
+      '<button class="star" data-fav="'+m.id+'" aria-pressed="'+fv+'" aria-label="Favoritar '+m.n+'"><svg viewBox="0 0 24 24" fill="'+(fv?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.7 5.7 6.3.8-4.6 4.3 1.2 6.2L12 17l-5.6 3 1.2-6.2L3 9.5l6.3-.8z"/></svg></button></div></div></article>';
+    });
+    h+='</div></section>';
+  });
+  $("#lista").innerHTML=tot?h:'<p class="vazio">Nenhuma matéria encontrada. Tente outra palavra.</p>';
+}
+$("#chips").addEventListener("click",function(e){var b=e.target.closest("[data-f]");if(!b)return;filtro=b.getAttribute("data-f");chips();lista()});
+$("#busca").addEventListener("input",function(e){q=e.target.value;lista()});
+$("#lista").addEventListener("click",function(e){
+  var g=e.target.closest("[data-go]");if(g){abrir(+g.getAttribute("data-go"));return}
+  var f=e.target.closest("[data-fav]");if(f){var id=+f.getAttribute("data-fav"),i=favs.indexOf(id);if(i>=0)favs.splice(i,1);else favs.push(id);store.set("msp-favs",JSON.stringify(favs));chips();lista()}
+});
+
+/* ---------- painel ---------- */
+var ov=$("#ov"),lastFocus=null;
+function abrir(id){
+  cur=MAT[id];lastFocus=document.activeElement;
+  $("#sh-av").innerHTML=cur.av+'<i class="on"></i>';$("#sh-nome").textContent=cur.n;
+  $("#f-tema").value="";$("#f-cargo").value=store.get("msp-cargo")||"";$("#f-banca").value=store.get("msp-banca")||"";
+  $("#sug").innerHTML=cur.t.map(function(t){return'<button type="button" data-t="'+t+'">'+t+'</button>'}).join("");
+  modo="aula";modes();gerar();
+  ov.classList.add("open");ov.setAttribute("aria-hidden","false");document.body.classList.add("lock");
+  $(".sh-body").scrollTop=0;$("#fechar").focus();
+}
+function fechar(){ov.classList.remove("open");ov.setAttribute("aria-hidden","true");document.body.classList.remove("lock");if(lastFocus)lastFocus.focus()}
+function modes(){
+  $("#modes").innerHTML=MODOS.map(function(m){return'<button class="mode" data-m="'+m.k+'" aria-pressed="'+(m.k===modo)+'">'+m.i+'<strong>'+m.n+'</strong><span>'+m.d+'</span></button>'}).join("");
+}
+var dirty=false;
+function gerar(){
+  var v={m:cur.n,tema:$("#f-tema").value.trim(),cargo:$("#f-cargo").value.trim(),banca:$("#f-banca").value};
+  $("#txt").value=P(modo,v);dirty=false;
+  var md=MODOS.filter(function(x){return x.k===modo})[0];
+  $("#hint").textContent=md.n+" · "+cur.n+". O texto muda quando você altera os dados acima. Se editar o pedido à mão, ele deixa de mudar sozinho.";
+}
+$("#modes").addEventListener("click",function(e){var b=e.target.closest("[data-m]");if(!b)return;modo=b.getAttribute("data-m");modes();gerar()});
+["#f-tema","#f-cargo","#f-banca"].forEach(function(s){$(s).addEventListener("input",function(){
+  if(s==="#f-cargo")store.set("msp-cargo",$(s).value);if(s==="#f-banca")store.set("msp-banca",$(s).value);
+  if(!dirty)gerar();
+})});
+$("#txt").addEventListener("input",function(){dirty=true});
+$("#sug").addEventListener("click",function(e){var b=e.target.closest("[data-t]");if(!b)return;$("#f-tema").value=b.getAttribute("data-t");if(dirty)dirty=false;gerar()});
+$("#fechar").addEventListener("click",fechar);
+ov.addEventListener("click",function(e){if(e.target===ov)fechar()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&ov.classList.contains("open"))fechar()});
+
+/* ---------- copiar e abrir ---------- */
+var LINKS={gemini:"https://gemini.google.com/app",notebooklm:"https://notebooklm.google.com",chatgpt:"https://chatgpt.com/",claude:"https://claude.ai/new"};
+var PREFILL={chatgpt:"https://chatgpt.com/?q=",claude:"https://claude.ai/new?q="};
+var MAXURL=16000;
+var NOMES={gemini:"Gemini",notebooklm:"NotebookLM",chatgpt:"ChatGPT",claude:"Claude"};
+var toast=$("#toast"),tt;
+function aviso(t){toast.textContent=t;toast.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove("on")},3200)}
+function copiar(txt){
+  if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(txt);
+  return new Promise(function(ok,err){var a=document.createElement("textarea");a.value=txt;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.focus();a.select();
+    try{document.execCommand("copy")?ok():err()}catch(e){err(e)}document.body.removeChild(a)});
+}
+function falha(){var t=$("#txt");t.focus();t.select();aviso("Não deu para copiar sozinho. O texto está selecionado: copie e cole na IA.")}
+$(".ias").addEventListener("click",function(e){
+  var b=e.target.closest("[data-ia]");if(!b)return;var ia=b.getAttribute("data-ia"),txt=$("#txt").value;
+  var url=LINKS[ia],pre=false;
+  if(PREFILL[ia]){var u=PREFILL[ia]+encodeURIComponent(txt);if(u.length<=MAXURL){url=u;pre=true}}
+  window.open(url,"_blank","noopener");
+  copiar(txt).then(function(){aviso(pre?"O pedido já vai escrito no "+NOMES[ia]+". Se não aparecer, é só colar: ele também foi copiado.":"Pedido copiado. No "+NOMES[ia]+", é só colar e enviar.")}).catch(function(){if(pre)aviso("O pedido já vai escrito no "+NOMES[ia]+".");else falha()});
+});
+$("#so-copiar").addEventListener("click",function(){copiar($("#txt").value).then(function(){aviso("Pedido copiado.")}).catch(falha)});
+
+chips();lista();
+})();
+</script>
+</body>
+</html>
