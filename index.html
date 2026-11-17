@@ -64,6 +64,10 @@ h1{font-family:var(--f-display);font-weight:900;font-size:clamp(48px,11vw,104px)
 .op .it.rb{border-color:#c0392b;background:rgba(192,57,43,.12)}
 .op .it.rb .t,.op .it.rb .p{color:#e74c3c}
 .op .it .rbt{display:inline-block;margin-top:4px;font-size:11px;font-weight:700;color:#fff;background:#c0392b;border-radius:6px;padding:2px 7px}
+.op .guia{max-width:760px;margin:18px auto 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:14px;line-height:1.55}
+.op .guia h3{margin:0 0 8px;font-size:16px}
+.op .guia ol,.op .guia ul{margin:6px 0 10px;padding-left:20px}
+.op .guia a{color:var(--gold)}
 .op .regras{max-width:760px;margin:16px auto 0;color:var(--muted);font-size:13px;line-height:1.5}
 .upd{margin-top:12px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
 .live{width:8px;height:8px;border-radius:50%;background:var(--down);box-shadow:0 0 0 0 rgba(224,100,90,.6);animation:pulse 2s infinite}
@@ -380,6 +384,23 @@ function renderOp(){
         <div class="x">Ranking ${r.base} pts${ex(r)?" · "+ex(r):""}</div>
         ${r.rebaixamento?`<span class="rbt">Risco de rebaixamento</span>`:""}</div>
       <div class="t num">${r.pts}<small>pts</small></div></div>`).join("") || `<div class="empty">Nenhum nome com “${esc($("q").value)}”.</div>`}</div>
+    <div class="guia">
+      <h3>📲 Como comprovar seus pontos extras</h3>
+      <p>Sempre que cumprir uma atividade, envie pelo ${o.formulario?`<a href="${esc(o.formulario)}" target="_blank" rel="noopener">formulário das Operações Especiais</a>`:"formulário das Operações Especiais"} (1 minuto):</p>
+      <ol>
+        <li>Abra o formulário e entre com sua conta Google, se ele pedir. É obrigatório para anexar a foto.</li>
+        <li>Escolha <b>seu nome</b> na lista.</li>
+        <li>Marque <b>o que você cumpriu</b>.</li>
+        <li>Coloque a <b>data</b> em que cumpriu.</li>
+        <li>Anexe o <b>print ou foto</b> que comprova e clique em <b>Enviar</b>.</li>
+      </ol>
+      <ul>
+        <li><b>Sem print não vale.</b></li>
+        <li>Uma atividade por envio. Fez duas? Preencha duas vezes.</li>
+        <li>Envio repetido não conta em dobro: a live e o desafio contam uma vez por data, a salinha uma vez por semana e o simulado uma vez por ciclo.</li>
+        <li>O ciclo vai de ${fmtD(o.ini)} a ${fmtD(o.fim)}: envie até o dia ${Number(o.fim.slice(8))}. O ranking atualiza sozinho às 12h e entre 19h e 21h.</li>
+      </ul>
+    </div>
     <p class="regras"><b>Como funciona:</b> vale a pontuação normal do ranking nos dias do ciclo, mais os extras comprovados pelo formulário (com print anexado): live quinzenal +${o.pontos.live}, desafio do grupo +${o.pontos.desafio}, simulado mensal +${o.pontos.simulado}, salinha +${o.pontos.salinha} por semana. O placar dos times é a média de pontos por integrante. O último colocado do ciclo corre risco de rebaixamento.</p>`;
 }
 
