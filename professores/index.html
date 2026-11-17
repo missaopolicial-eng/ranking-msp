@@ -82,6 +82,10 @@ h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-si
 .head small{display:block;margin-top:4px;font-family:var(--f-num);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lo)}
 .card p{margin:14px 0 10px;color:var(--ink2);font-size:15px;line-height:1.45}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tags span.more{background:var(--ink);color:var(--gold-hi)}
+.achou{width:100%;font-size:12px;font-weight:700;color:var(--gold-lo);margin-bottom:2px}
+.tags .hit{font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--gold);background:rgba(214,172,76,.14);color:var(--ink);padding:6px 12px;border-radius:999px;text-align:left}
+.tags .hit:hover{background:var(--ink);color:var(--gold-hi)}
 .tags span{font-size:12px;background:var(--paper2);color:var(--ink2);padding:4px 10px;border-radius:8px}
 .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .go{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;background:var(--bg);color:var(--gold-hi);font-weight:800;font-size:15px;padding:12px 20px;min-height:46px;box-shadow:inset 0 0 0 1px var(--gold-lo)}
@@ -122,7 +126,9 @@ h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-si
 .form label{font-size:13px;font-weight:800;display:block}
 .form input,.form select{width:100%;margin-top:5px;font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;color:var(--ink)}
 .form input:focus,.form select:focus,textarea:focus{outline:none;border-color:var(--gold)}
-.sug{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sug{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;max-height:168px;overflow:auto;padding:2px}
+.sugl{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin-top:10px}
+.sug button[aria-pressed="true"]{background:var(--ink);color:var(--gold-hi);border-color:var(--ink)}
 .sug button{border:1px solid var(--rule);background:#fff;border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
 .sug button:hover{border-color:var(--gold);color:var(--ink)}
 .sect{margin-top:24px}
@@ -189,7 +195,7 @@ footer a{color:var(--gold-hi)}
 
   <div class="tools">
     <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="busca" type="search" placeholder="Busque a matéria ou o assunto (ex.: crase, flagrante, drogas)" autocomplete="off" aria-label="Buscar matéria ou assunto"></label>
+      <input id="busca" type="search" placeholder="Busque qualquer assunto (ex.: crase, flagrante, tabela-verdade)" autocomplete="off" aria-label="Buscar matéria ou assunto"></label>
     <div class="chips" id="chips" role="group" aria-label="Filtrar por área"></div>
   </div>
 
@@ -217,7 +223,7 @@ footer a{color:var(--gold-hi)}
         <div class="form">
           <label>Assunto
             <input id="f-tema" placeholder="Ex.: Prisão em flagrante" autocomplete="off">
-            <div class="sug" id="sug"></div>
+            <span class="sugl" id="sugl"></span><div class="sug" id="sug"></div>
           </label>
           <label>Concurso ou cargo
             <input id="f-cargo" placeholder="Ex.: Policial Rodoviário Federal" autocomplete="off">
@@ -344,32 +350,32 @@ function avatar(c,id){
 /* ---------- matérias ---------- */
 var AREAS=["Básicas","Direito","Militar","Trânsito e PRF","Gestão e Administração"];
 var MAT=[
- {n:"Língua Portuguesa",a:0,d:"Interpretação, gramática e as pegadinhas de redação oficial que a banca adora.",t:["Interpretação de texto","Crase","Concordância verbal","Pontuação"],c:{h:"cap",mic:1,sk:1}},
- {n:"Raciocínio Lógico",a:0,d:"Resolve passo a passo, sem pular conta, até a lógica fazer sentido.",t:["Proposições e conectivos","Equivalências lógicas","Porcentagem","Diagramas"],c:{h:"helm",fem:1,sk:0}},
- {n:"Direito Constitucional",a:1,d:"Direitos fundamentais, art. 144 e organização do Estado sem decoreba vazia.",t:["Direitos fundamentais","Remédios constitucionais","Segurança pública (art. 144)","Controle de constitucionalidade"],c:{h:"helm",w:"pistol",beard:1,sk:1}},
- {n:"Direito Administrativo",a:1,d:"Atos, poderes e agentes públicos explicados com casos do dia a dia da corporação.",t:["Atos administrativos","Poderes administrativos","Agentes públicos","Improbidade"],c:{h:"cap",fem:1,gl:1,sk:2}},
- {n:"Direito Penal",a:1,d:"Teoria do crime e crimes em espécie com exemplos de ocorrência real.",t:["Teoria do crime","Excludentes de ilicitude","Concurso de pessoas","Crimes contra a pessoa"],c:{h:"nvgd",w:"rifle",mask:1,sk:1}},
- {n:"Direito Processual Penal",a:1,d:"Inquérito, flagrante e prisões: o processo penal que você vai aplicar na rua.",t:["Inquérito policial","Prisão em flagrante","Prisão preventiva e temporária","Provas"],c:{h:"helm",w:"rifle",gl:1,mic:1,sk:3}},
- {n:"Legislação Penal Especial",a:1,d:"As leis que sustentam a rotina policial: drogas, armas, abuso de autoridade e mais.",t:["Lei de Drogas","Estatuto do Desarmamento","Abuso de autoridade","Organização criminosa"],c:{h:"nvgd",w:"rifle",cam:1,beard:1,sk:2}},
- {n:"Direitos Humanos",a:1,d:"Tratados, tortura e uso da força: o que cai e como a banca cobra.",t:["Tratados internacionais","Tortura","Uso da força","Grupos vulneráveis"],c:{h:"helm",fem:1,mic:1,sk:3}},
- {n:"Criminologia",a:1,d:"Escolas, causas do crime e prevenção, sem complicar.",t:["Escolas criminológicas","Prevenção do crime","Vitimologia","Teorias do crime"],c:{h:"nvgu",beard:1,gl:1,sk:0}},
- {n:"Direito Penal Militar",a:2,d:"Crimes militares, hierarquia e disciplina com casos de quartel.",t:["Crime militar","Aplicação da lei penal militar","Insubordinação","Deserção"],c:{h:"helm",w:"rifle",cam:1,mask:1,sk:2}},
- {n:"Processo Penal Militar",a:2,d:"Do inquérito policial militar à sentença, em ordem e sem mistério.",t:["Inquérito policial militar","Prisão em flagrante militar","Competência","Ação penal militar"],c:{h:"nvgu",w:"pistol",cam:1,fem:1,sk:1}},
- {n:"Legislação da PMDF",a:2,d:"Estatuto, organização e regulamento disciplinar da PMDF.",t:["Organização básica","Estatuto dos militares","Regulamento disciplinar","Hierarquia e disciplina"],c:{h:"cap",w:"rifle",cam:1,sk:3}},
- {n:"Legislação de Trânsito",a:3,d:"CTB sem decoreba: infrações, crimes de trânsito e processo administrativo.",t:["Infrações e penalidades","Crimes de trânsito","Processo administrativo","Pedestres"],c:{h:"helm",w:"rifle",gl:1,mic:1,sk:1}},
- {n:"Legislação da PRF",a:3,d:"Carreira, competências e a estrutura da Polícia Rodoviária Federal.",t:["Competências da PRF","Carreira","Art. 144","Decreto 1.655"],c:{h:"nvgd",w:"rifle",beard:1,sk:2}},
- {n:"Ética no Serviço Público",a:4,d:"Código de ética, regime disciplinar e conflito de interesses em linguagem simples.",t:["Código de ética","Regime disciplinar","Conflito de interesses","Improbidade"],c:{h:"cap",w:"pistol",fem:1,sk:0}},
- {n:"Arquivologia",a:4,d:"Protocolo, classificação e temporalidade explicados com exemplos de delegacia.",t:["Protocolo","Classificação","Arquivamento","Temporalidade"],c:{h:"helm",gl:1,sk:4}},
- {n:"Administração Geral",a:4,d:"Planejamento, organização e gestão de pessoas com a cara da prova.",t:["Planejamento","Organização","Gestão de pessoas","Liderança"],c:{h:"nvgu",fem:1,mic:1,sk:1}},
- {n:"Administração Financeira e Orçamentária",a:4,d:"PPA, LDO e LOA: o orçamento público sem enrolação.",t:["PPA, LDO e LOA","Receita e despesa","Princípios orçamentários","Créditos adicionais"],c:{h:"cap",beard:1,gl:1,sk:3}},
- {n:"Língua Inglesa",a:0,d:"Leitura e interpretação de textos em inglês, sem precisar ser fluente.",t:["Interpretação de texto","Vocabulário","Tempos verbais","Falsos cognatos"],c:{h:"cap",mic:1,fem:1,sk:2}},
- {n:"Língua Espanhola",a:0,d:"Espanhol para prova: leitura, vocabulário e as palavras que enganam.",t:["Interpretação de texto","Heterossemânticos","Verbos","Artigos e pronomes"],c:{h:"helm",gl:1,sk:1}},
- {n:"Informática",a:0,d:"Windows, Office, internet e segurança da informação explicados na prática.",t:["Segurança da informação","Redes e internet","Windows","Word e Excel"],c:{h:"nvgu",mic:1,gl:1,sk:3}},
- {n:"Física",a:5,d:"Cinemática, dinâmica e energia com exemplos de viatura, frenagem e colisão.",t:["Cinemática","Leis de Newton","Energia e trabalho","Velocidade média"],c:{h:"helm",w:"rifle",beard:1,sk:0}},
- {n:"Estatística",a:5,d:"Média, probabilidade e gráficos passo a passo, sem pular conta.",t:["Média, moda e mediana","Probabilidade","Gráficos e tabelas","Desvio padrão"],c:{h:"cap",gl:1,fem:1,sk:1}},
- {n:"Contabilidade",a:5,d:"Patrimônio, lançamentos e balanço em linguagem simples.",t:["Patrimônio","Lançamentos contábeis","Balanço patrimonial","Contas"],c:{h:"helm",mic:1,sk:2}},
- {n:"Geopolítica",a:5,d:"Brasil e mundo: fronteiras, conflitos e atualidades que caem na prova.",t:["Fronteiras e segurança","Conflitos atuais","Blocos econômicos","Brasil no mundo"],c:{h:"nvgd",w:"rifle",cam:1,sk:3}},
- {n:"Legislação da PMGO",a:2,d:"Estatuto, organização e regulamento disciplinar da PMGO.",t:["Estatuto dos militares de Goiás","Organização básica","Regulamento disciplinar","Hierarquia e disciplina"],c:{h:"kepi",w:"pistol",beard:1,sk:2}}
+ {n:"Língua Portuguesa",a:0,d:"Interpretação, gramática e as pegadinhas de redação oficial que a banca adora.",t:["Compreensão e interpretação de textos", "Tipologia e gêneros textuais", "Ortografia oficial", "Acentuação gráfica", "Classes de palavras", "Formação de palavras", "Crase", "Sintaxe da oração e do período", "Pontuação", "Concordância verbal e nominal", "Regência verbal e nominal", "Colocação pronominal", "Significação das palavras", "Reescrita de frases e parágrafos", "Coesão e coerência", "Funções do \"que\" e do \"se\"", "Redação oficial"],c:{h:"cap",mic:1,sk:1}},
+ {n:"Raciocínio Lógico",a:0,d:"Resolve passo a passo, sem pular conta, até a lógica fazer sentido.",t:["Proposições e conectivos", "Tabela-verdade", "Equivalências lógicas", "Negação de proposições", "Tautologia e contradição", "Argumentação lógica", "Diagramas lógicos e conjuntos", "Quantificadores", "Sequências e padrões", "Princípios de contagem", "Análise combinatória", "Probabilidade", "Porcentagem", "Razão e proporção", "Regra de três", "Juros simples e compostos", "Problemas aritméticos", "Geometria básica"],c:{h:"helm",fem:1,sk:0}},
+ {n:"Direito Constitucional",a:1,d:"Direitos fundamentais, art. 144 e organização do Estado sem decoreba vazia.",t:["Princípios fundamentais", "Direitos e garantias fundamentais (art. 5º)", "Remédios constitucionais", "Direitos sociais", "Nacionalidade", "Direitos políticos", "Partidos políticos", "Organização político-administrativa", "Competências da União, Estados e Municípios", "Administração pública (arts. 37 a 41)", "Militares dos Estados e do DF", "Poder Legislativo", "Processo legislativo", "Poder Executivo", "Poder Judiciário", "Funções essenciais à Justiça", "Estado de defesa e estado de sítio", "Forças Armadas", "Segurança pública (art. 144)", "Controle de constitucionalidade", "Ordem social"],c:{h:"helm",w:"pistol",beard:1,sk:1}},
+ {n:"Direito Administrativo",a:1,d:"Atos, poderes e agentes públicos explicados com casos do dia a dia da corporação.",t:["Estado, governo e administração pública", "Princípios da administração pública", "Administração direta e indireta", "Agentes públicos", "Poderes administrativos", "Poder de polícia", "Atos administrativos", "Licitações (Lei 14.133/2021)", "Contratos administrativos", "Serviços públicos", "Controle da administração", "Responsabilidade civil do Estado", "Improbidade administrativa", "Processo administrativo", "Bens públicos", "Intervenção do Estado na propriedade", "Regime dos servidores (Lei 8.112/1990)"],c:{h:"cap",fem:1,gl:1,sk:2}},
+ {n:"Direito Penal",a:1,d:"Teoria do crime e crimes em espécie com exemplos de ocorrência real.",t:["Princípios do Direito Penal", "Lei penal no tempo e no espaço", "Teoria do crime", "Fato típico", "Dolo e culpa", "Erro de tipo e erro de proibição", "Consumação e tentativa", "Desistência voluntária e arrependimento", "Crime impossível", "Excludentes de ilicitude", "Culpabilidade e imputabilidade", "Concurso de pessoas", "Penas e sua aplicação", "Concurso de crimes", "Extinção da punibilidade", "Crimes contra a pessoa", "Crimes contra o patrimônio", "Crimes contra a dignidade sexual", "Crimes contra a fé pública", "Crimes contra a administração pública"],c:{h:"nvgd",w:"rifle",mask:1,sk:1}},
+ {n:"Direito Processual Penal",a:1,d:"Inquérito, flagrante e prisões: o processo penal que você vai aplicar na rua.",t:["Princípios do processo penal", "Lei processual penal no tempo e no espaço", "Inquérito policial", "Ação penal", "Ação civil ex delicto", "Jurisdição e competência", "Provas", "Busca e apreensão", "Sujeitos do processo", "Prisão em flagrante", "Prisão preventiva", "Prisão temporária", "Medidas cautelares diversas da prisão", "Liberdade provisória e fiança", "Audiência de custódia", "Juiz das garantias", "Citações e intimações", "Procedimentos", "Nulidades", "Recursos", "Habeas corpus"],c:{h:"helm",w:"rifle",gl:1,mic:1,sk:3}},
+ {n:"Legislação Penal Especial",a:1,d:"As leis que sustentam a rotina policial: drogas, armas, abuso de autoridade e mais.",t:["Lei de Drogas", "Estatuto do Desarmamento", "Abuso de autoridade", "Crimes hediondos", "Lei de Tortura", "Organização criminosa", "Lavagem de dinheiro", "Lei Maria da Penha", "Crimes do ECA", "Crimes do Estatuto da Pessoa Idosa", "Crimes ambientais", "Crimes de racismo", "Interceptação telefônica", "Juizados Especiais Criminais", "Contravenções penais", "Crimes de trânsito", "Pacote Anticrime"],c:{h:"nvgd",w:"rifle",cam:1,beard:1,sk:2}},
+ {n:"Direitos Humanos",a:1,d:"Tratados, tortura e uso da força: o que cai e como a banca cobra.",t:["Teoria geral dos direitos humanos", "Dimensões dos direitos humanos", "Declaração Universal dos Direitos Humanos", "Pacto Internacional dos Direitos Civis e Políticos", "Convenção Americana (Pacto de São José)", "Sistema interamericano", "Tratados na Constituição (art. 5º, §§ 2º e 3º)", "Convenção contra a Tortura", "Uso da força e de armas de fogo", "Código de conduta dos encarregados da aplicação da lei", "Programa Nacional de Direitos Humanos", "Grupos vulneráveis", "Regras de Mandela"],c:{h:"helm",fem:1,mic:1,sk:3}},
+ {n:"Criminologia",a:1,d:"Escolas, causas do crime e prevenção, sem complicar.",t:["Conceito, objeto e método", "Evolução histórica", "Escola Clássica", "Escola Positiva", "Escolas sociológicas", "Teoria da anomia", "Associação diferencial", "Teoria do etiquetamento", "Criminologia crítica", "Vitimologia", "Prevenção do crime", "Modelos de reação ao crime", "Política criminal", "Cifra negra", "Criminologia ambiental"],c:{h:"nvgu",beard:1,gl:1,sk:0}},
+ {n:"Direito Penal Militar",a:2,d:"Crimes militares, hierarquia e disciplina com casos de quartel.",t:["Aplicação da lei penal militar", "Crime militar (art. 9º do CPM)", "Crime propriamente e impropriamente militar", "Imputabilidade", "Concurso de agentes", "Excludentes", "Penas principais e acessórias", "Crimes contra a autoridade ou disciplina militar", "Insubordinação", "Motim e revolta", "Deserção", "Abandono de posto", "Crimes contra o serviço militar", "Crimes contra a administração militar", "Peculato e concussão"],c:{h:"helm",w:"rifle",cam:1,mask:1,sk:2}},
+ {n:"Processo Penal Militar",a:2,d:"Do inquérito policial militar à sentença, em ordem e sem mistério.",t:["Polícia judiciária militar", "Inquérito policial militar", "Ação penal militar", "Competência da Justiça Militar", "Juízes e conselhos de justiça", "Prisão em flagrante", "Prisão preventiva", "Menagem", "Liberdade provisória", "Provas", "Deserção e insubmissão (processos especiais)", "Recursos", "Habeas corpus"],c:{h:"nvgu",w:"pistol",cam:1,fem:1,sk:1}},
+ {n:"Legislação da PMDF",a:2,d:"Estatuto, organização e regulamento disciplinar da PMDF.",t:["Organização básica da PMDF", "Estatuto dos policiais militares", "Hierarquia e disciplina", "Direitos e prerrogativas", "Deveres e obrigações", "Regulamento disciplinar", "Transgressões e punições", "Promoções", "Remuneração", "Inatividade e reforma", "Segurança pública na Constituição"],c:{h:"cap",w:"rifle",cam:1,sk:3}},
+ {n:"Legislação de Trânsito",a:3,d:"CTB sem decoreba: infrações, crimes de trânsito e processo administrativo.",t:["Disposições preliminares", "Sistema Nacional de Trânsito", "Normas gerais de circulação e conduta", "Pedestres e condutores não motorizados", "Educação para o trânsito", "Sinalização de trânsito", "Engenharia de tráfego", "Veículos e equipamentos obrigatórios", "Registro e licenciamento", "Habilitação", "Infrações", "Penalidades", "Medidas administrativas", "Processo administrativo", "Crimes de trânsito", "Conceitos e definições (Anexo I)", "Resoluções do Contran"],c:{h:"helm",w:"rifle",gl:1,mic:1,sk:1}},
+ {n:"Legislação da PRF",a:3,d:"Carreira, competências e a estrutura da Polícia Rodoviária Federal.",t:["Competências da PRF (art. 20 do CTB)", "Segurança pública (art. 144)", "Decreto 1.655/1995", "Carreira de policial rodoviário federal", "Regimento interno", "Estrutura organizacional", "Deveres e disciplina do servidor"],c:{h:"nvgd",w:"rifle",beard:1,sk:2}},
+ {n:"Ética no Serviço Público",a:4,d:"Código de ética, regime disciplinar e conflito de interesses em linguagem simples.",t:["Ética e moral", "Ética no setor público", "Código de Ética do Servidor (Decreto 1.171/1994)", "Comissões de ética", "Sistema de Gestão da Ética (Decreto 6.029/2007)", "Regime disciplinar da Lei 8.112/1990", "Deveres e proibições", "Processo administrativo disciplinar", "Conflito de interesses (Lei 12.813/2013)", "Improbidade administrativa", "Lei de Acesso à Informação", "Lei Anticorrupção"],c:{h:"cap",w:"pistol",fem:1,sk:0}},
+ {n:"Arquivologia",a:4,d:"Protocolo, classificação e temporalidade explicados com exemplos de delegacia.",t:["Conceitos fundamentais", "Teoria das três idades", "Gestão de documentos", "Protocolo", "Classificação de documentos", "Código de classificação", "Tabela de temporalidade", "Avaliação e destinação", "Métodos de arquivamento", "Arquivo corrente, intermediário e permanente", "Preservação e conservação", "Documentos digitais", "Lei de Arquivos (Lei 8.159/1991)"],c:{h:"helm",gl:1,sk:4}},
+ {n:"Administração Geral",a:4,d:"Planejamento, organização e gestão de pessoas com a cara da prova.",t:["Funções da administração", "Teorias da administração", "Planejamento estratégico", "Organização e estruturas", "Direção e liderança", "Motivação", "Comunicação", "Controle", "Gestão de pessoas", "Gestão por competências", "Gestão da qualidade", "Gestão de processos", "Gestão de projetos", "Modelos de administração pública", "Governança"],c:{h:"nvgu",fem:1,mic:1,sk:1}},
+ {n:"Administração Financeira e Orçamentária",a:4,d:"PPA, LDO e LOA: o orçamento público sem enrolação.",t:["Orçamento público", "Princípios orçamentários", "Ciclo orçamentário", "PPA, LDO e LOA", "Créditos adicionais", "Receita pública", "Despesa pública", "Restos a pagar", "Despesas de exercícios anteriores", "Suprimento de fundos", "Lei 4.320/1964", "Lei de Responsabilidade Fiscal", "Conta única do Tesouro"],c:{h:"cap",beard:1,gl:1,sk:3}},
+ {n:"Língua Inglesa",a:0,d:"Leitura e interpretação de textos em inglês, sem precisar ser fluente.",t:["Interpretação de texto", "Vocabulário", "Falsos cognatos", "Tempos verbais", "Verbos modais", "Pronomes", "Preposições", "Conectivos", "Voz passiva", "Discurso indireto", "Phrasal verbs", "Comparativos e superlativos", "Orações condicionais"],c:{h:"cap",mic:1,fem:1,sk:2}},
+ {n:"Língua Espanhola",a:0,d:"Espanhol para prova: leitura, vocabulário e as palavras que enganam.",t:["Interpretação de texto", "Vocabulário", "Heterossemânticos", "Heterogenéricos e heterotônicos", "Artigos e contrações", "Pronomes", "Verbos regulares e irregulares", "Tempos verbais", "Preposições", "Conectivos", "Acentuação", "Apócope"],c:{h:"helm",gl:1,sk:1}},
+ {n:"Informática",a:0,d:"Windows, Office, internet e segurança da informação explicados na prática.",t:["Hardware e software", "Windows", "Linux", "Editor de textos", "Planilhas", "Apresentações", "Redes de computadores", "Internet e intranet", "Navegadores", "Correio eletrônico", "Computação em nuvem", "Segurança da informação", "Malwares", "Backup", "Noções de banco de dados"],c:{h:"nvgu",mic:1,gl:1,sk:3}},
+ {n:"Física",a:5,d:"Cinemática, dinâmica e energia com exemplos de viatura, frenagem e colisão.",t:["Grandezas e unidades", "Cinemática", "Movimento uniforme e uniformemente variado", "Movimento circular", "Leis de Newton", "Atrito", "Trabalho e energia", "Potência", "Impulso e quantidade de movimento", "Colisões", "Gravitação", "Estática", "Hidrostática", "Termologia", "Óptica", "Ondas", "Eletricidade básica"],c:{h:"helm",w:"rifle",beard:1,sk:0}},
+ {n:"Estatística",a:5,d:"Média, probabilidade e gráficos passo a passo, sem pular conta.",t:["Conceitos básicos", "Tipos de variáveis", "Tabelas e gráficos", "Distribuição de frequências", "Média, moda e mediana", "Variância e desvio padrão", "Quartis e percentis", "Probabilidade", "Distribuição binomial", "Distribuição normal", "Amostragem", "Correlação e regressão", "Intervalo de confiança", "Testes de hipóteses"],c:{h:"cap",gl:1,fem:1,sk:1}},
+ {n:"Contabilidade",a:5,d:"Patrimônio, lançamentos e balanço em linguagem simples.",t:["Conceito, objeto e finalidade", "Patrimônio", "Equação patrimonial", "Contas e plano de contas", "Fatos contábeis", "Lançamentos (débito e crédito)", "Regime de competência e de caixa", "Balancete", "Balanço patrimonial", "Demonstração do resultado", "Operações com mercadorias", "Depreciação", "Princípios contábeis", "Noções de contabilidade pública"],c:{h:"helm",mic:1,sk:2}},
+ {n:"Geopolítica",a:5,d:"Brasil e mundo: fronteiras, conflitos e atualidades que caem na prova.",t:["Conceitos de geopolítica", "Ordem mundial e globalização", "Blocos econômicos", "Organismos internacionais", "Conflitos atuais", "Fronteiras do Brasil", "Faixa de fronteira e segurança", "Crime organizado transnacional", "Tráfico de drogas e armas", "Migrações e refugiados", "Amazônia e meio ambiente", "Energia e recursos naturais", "Brasil no mundo"],c:{h:"nvgd",w:"rifle",cam:1,sk:3}},
+ {n:"Legislação da PMGO",a:2,d:"Estatuto, organização e regulamento disciplinar da PMGO.",t:["Organização básica da PMGO", "Estatuto dos militares de Goiás", "Hierarquia e disciplina", "Direitos e prerrogativas", "Deveres e obrigações", "Regulamento disciplinar", "Transgressões e punições", "Promoções", "Inatividade e reforma", "Segurança pública na Constituição de Goiás"],c:{h:"kepi",w:"pistol",beard:1,sk:2}}
 ];
 var CAT=[["Básicas",0],["Direito",1],["Militar",2],["Legislação PRF e Trânsito",3],["Gestão e Administração",4],["Exatas e Atualidades",5]];
 var SLUG=["portugues", "raciocinio-logico", "constitucional", "administrativo", "penal", "processual-penal", "penal-especial", "direitos-humanos", "criminologia", "penal-militar", "processo-penal-militar", "pmdf", "transito", "prf", "etica", "arquivologia", "administracao-geral", "afo", "lingua-inglesa", "lingua-espanhola", "informatica", "fisica", "estatistica", "contabilidade", "geopolitica", "pmgo"];window.MSPAV=[];
@@ -496,6 +502,12 @@ function chips(){
   var f=favs.length; h+='<button class="chip" aria-pressed="'+(filtro==="Favoritos")+'" data-f="Favoritos">Favoritos<small>'+f+'</small></button>';
   $("#chips").innerHTML=h;
 }
+function esc(t){return t.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+function tags(m,nq){
+  if(nq){var hit=m.t.filter(function(t){return norm(t).indexOf(nq)>=0});
+    if(hit.length)return '<small class="achou">Assuntos encontrados. Toque para estudar:</small>'+hit.map(function(t){return'<button type="button" class="hit" data-go="'+m.id+'" data-tema="'+esc(t)+'">'+esc(t)+'</button>'}).join("");}
+  return m.t.slice(0,3).map(function(t){return'<span>'+esc(t)+'</span>'}).join("")+(m.t.length>3?'<span class="more">+'+(m.t.length-3)+' assuntos</span>':'');
+}
 function lista(){
   var nq=norm(q.trim()),h="",tot=0;
   CAT.forEach(function(c){
@@ -511,28 +523,29 @@ function lista(){
     ms.forEach(function(m){
       var fv=favs.indexOf(m.id)>=0;
       h+='<article class="card"><div class="ph">'+m.av+'<span class="area">'+m.area+'</span><span class="live"><i></i>Disponível</span><h3>'+m.n+'</h3></div>'+
-      '<div class="cb"><small class="role">Professor virtual</small><p>'+m.d+'</p><div class="tags">'+m.t.slice(0,3).map(function(t){return'<span>'+t+'</span>'}).join("")+'</div>'+
+      '<div class="cb"><small class="role">Professor virtual</small><p>'+m.d+'</p><div class="tags">'+tags(m,nq)+'</div>'+
       '<div class="foot"><button class="go" data-go="'+m.id+'">'+CHAT+'Acessar</button>'+
       '<button class="star" data-fav="'+m.id+'" aria-pressed="'+fv+'" aria-label="Favoritar '+m.n+'"><svg viewBox="0 0 24 24" fill="'+(fv?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.7 5.7 6.3.8-4.6 4.3 1.2 6.2L12 17l-5.6 3 1.2-6.2L3 9.5l6.3-.8z"/></svg></button></div></div></article>';
     });
     h+='</div></section>';
   });
-  $("#lista").innerHTML=tot?h:'<p class="vazio">Nenhuma matéria encontrada. Tente outra palavra.</p>';
+  $("#lista").innerHTML=tot?h:'<p class="vazio">Não achamos esse assunto na lista.<br>Sem problema: abra a matéria mais próxima e escreva o assunto no campo <b>Assunto</b>. O professor ensina qualquer tema.</p>';
 }
 $("#chips").addEventListener("click",function(e){var b=e.target.closest("[data-f]");if(!b)return;filtro=b.getAttribute("data-f");chips();lista()});
 $("#busca").addEventListener("input",function(e){q=e.target.value;lista()});
 $("#lista").addEventListener("click",function(e){
-  var g=e.target.closest("[data-go]");if(g){abrir(+g.getAttribute("data-go"));return}
+  var g=e.target.closest("[data-go]");if(g){abrir(+g.getAttribute("data-go"),g.getAttribute("data-tema"));return}
   var f=e.target.closest("[data-fav]");if(f){var id=+f.getAttribute("data-fav"),i=favs.indexOf(id);if(i>=0)favs.splice(i,1);else favs.push(id);store.set("msp-favs",JSON.stringify(favs));chips();lista()}
 });
 
 /* ---------- painel ---------- */
 var ov=$("#ov"),lastFocus=null;
-function abrir(id){
+function abrir(id,tema){
   cur=MAT[id];lastFocus=document.activeElement;
   $("#sh-av").innerHTML=cur.av+'<i class="on"></i>';$("#sh-nome").textContent=cur.n;
   $("#f-tema").value="";$("#f-cargo").value=store.get("msp-cargo")||"";$("#f-banca").value=store.get("msp-banca")||"";
-  $("#sug").innerHTML=cur.t.map(function(t){return'<button type="button" data-t="'+t+'">'+t+'</button>'}).join("");
+  $("#sug").innerHTML=cur.t.map(function(t){return'<button type="button" data-t="'+esc(t)+'">'+esc(t)+'</button>'}).join("");$("#sugl").textContent="Todos os assuntos da matéria ("+cur.t.length+"). Toque para escolher:";
+  if(tema){$("#f-tema").value=tema;[].forEach.call($("#sug").children,function(x){x.setAttribute("aria-pressed",x.getAttribute("data-t")===tema)})}
   modo="aula";modes();gerar();
   ov.classList.add("open");ov.setAttribute("aria-hidden","false");document.body.classList.add("lock");
   $(".sh-body").scrollTop=0;$("#fechar").focus();
@@ -554,7 +567,7 @@ $("#modes").addEventListener("click",function(e){var b=e.target.closest("[data-m
   if(!dirty)gerar();
 })});
 $("#txt").addEventListener("input",function(){dirty=true});
-$("#sug").addEventListener("click",function(e){var b=e.target.closest("[data-t]");if(!b)return;$("#f-tema").value=b.getAttribute("data-t");if(dirty)dirty=false;gerar()});
+$("#sug").addEventListener("click",function(e){var b=e.target.closest("[data-t]");if(!b)return;$("#f-tema").value=b.getAttribute("data-t");[].forEach.call($("#sug").children,function(x){x.setAttribute("aria-pressed",x===b)});if(dirty)dirty=false;gerar()});
 $("#fechar").addEventListener("click",fechar);
 ov.addEventListener("click",function(e){if(e.target===ov)fechar()});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&ov.classList.contains("open"))fechar()});
