@@ -39,6 +39,10 @@ h1{font-family:var(--f-display);font-weight:900;font-size:clamp(48px,11vw,104px)
 .audit:hover{background:rgba(214,172,76,.1)}
 .audit[hidden]{display:none}
 [hidden]{display:none!important}
+.opteaser{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;max-width:760px;margin:0 auto 18px;padding:12px 16px;border-radius:14px;background:linear-gradient(90deg,rgba(214,172,76,.14),rgba(214,172,76,.04));border:1px solid var(--gold-lo);cursor:pointer;text-align:center}
+.opteaser b{color:var(--gold)}
+.opteaser .sc{font-weight:800;font-size:18px}
+.opteaser .go{font-size:13px;font-weight:700;color:var(--gold);text-decoration:underline}
 .op{margin-top:18px}
 .op .placar{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:0 auto 14px;max-width:640px}
 .op .tm{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
@@ -204,6 +208,7 @@ footer{margin-top:56px;text-align:center;font-size:12px;color:var(--dim);letter-
   </div>
   <div class="podium" id="podium"></div>
   <section class="op" id="op" hidden aria-label="Ranking Operações Especiais"></section>
+  <div class="opteaser" id="opteaser" hidden role="button" tabindex="0"></div>
 
   <div class="search">
     <label for="q">
@@ -382,8 +387,15 @@ function render(){
   const op = view==="opesp";
   $("op").hidden = !op;
   ["podium","grid","more","nf","legend","largada"].forEach(id=>{ if(op) $(id).hidden = true; });
+  if (op) $("opteaser").hidden = true;
   if (op){ $("periodo").textContent = `Operações Especiais · ${fmtD(DATA.opesp.ini)} — ${fmtD(DATA.opesp.fim)}`; renderOp(); return; }
   $("grid").hidden = false; $("nf").hidden = false; $("legend").hidden = false;
+  const tz = $("opteaser");
+  if (DATA.opesp && DATA.opesp.ranking && DATA.opesp.ranking.length){
+    const P = DATA.opesp.placar, f = v=>String(v).replace(".",",");
+    tz.innerHTML = `<span>🎖️ <b>Operações Especiais</b> · grupo de elite com ranking próprio</span><span class="sc">🐺 ${f(P.lobos.media)} × ${f(P.aguias.media)} 🦅</span><span class="go">Ver ranking dos times →</span>`;
+    tz.hidden = false;
+  }
   const list = rows();
   const q = norm($("q").value);
   $("periodo").textContent = view==="semana"
@@ -470,6 +482,8 @@ function init(){
   $("tab-semana").onclick = ()=>setTab("semana");
   $("tab-ontem").onclick = ()=>setTab("ontem");
   if (DATA.opesp && DATA.opesp.ranking && DATA.opesp.ranking.length){ $("tab-opesp").hidden = false; $("tab-opesp").onclick = ()=>setTab("opesp");
+    const goOp = ()=>{ setTab("opesp"); window.scrollTo({top:0,behavior:"smooth"}); };
+    $("opteaser").onclick = goOp; $("opteaser").onkeydown = e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); goOp(); } };
     if (location.hash === "#opesp") setTab("opesp"); }
   $("btn-more").onclick = ()=>{ showAll=true; render(); };
   $("q").addEventListener("input", render);
