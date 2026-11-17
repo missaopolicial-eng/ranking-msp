@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tire suas dúvidas a qualquer hora | MSP</title>
+<meta name="description" content="Guia passo a passo para usar inteligência artificial e tirar dúvidas de qualquer matéria, a qualquer hora, pelo celular.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Krona+One&family=Montserrat:wght@600&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#0c0b09; --bg2:#14120e; --card:#1a1712; --line:#2f2a20; --fg:#f3ecdd; --muted:#a59a83;
+  --gold:#d6ac4c; --gold-hi:#f4d27c; --gold-lo:#8a6a24;
+  --paper:#fbf8f1; --paper2:#f3ede0; --ink:#14120e; --ink2:#5b5446; --rule:#e4dccb;
+  --ok:#2f7d4f; --bad:#b3402f;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left))}
+a{color:inherit}
+
+/* topo */
+.hero{background:var(--bg);color:var(--fg);text-align:center;padding:42px 0 38px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-40% -20% auto;height:480px;background:radial-gradient(closest-side,rgba(214,172,76,.2),transparent 70%);pointer-events:none}
+.logo{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 auto 26px;width:min(340px,86%)}
+.logo-msp{font-family:"Krona One","Arial Black",sans-serif;font-size:clamp(46px,13vw,72px);line-height:.95;letter-spacing:.04em;color:#fff}
+.logo-sub{font-family:"Montserrat",var(--f-body);font-weight:600;font-size:clamp(9px,2.5vw,12px);letter-spacing:.42em;text-transform:uppercase;color:#fff;padding-left:.42em;white-space:nowrap}
+.logo-rule{display:flex;align-items:center;gap:10px;width:100%;margin-top:4px}
+.logo-rule span{flex:1;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold-hi) 70%,var(--gold));border-radius:2px}
+.logo-rule span:last-child{background:linear-gradient(90deg,var(--gold),var(--gold-hi) 30%,var(--gold) 70%,transparent)}
+.logo-rule svg{width:20px;height:20px;flex:none}
+.eyebrow{position:relative;font-family:var(--f-num);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+h1{position:relative;font-family:var(--f-display);font-weight:900;font-size:clamp(40px,10vw,76px);line-height:.95;text-transform:uppercase;margin:10px 0 14px;text-wrap:balance;
+  background:linear-gradient(180deg,#fff7e2 0%,var(--gold-hi) 45%,var(--gold) 75%,var(--gold-lo) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cta{position:relative;display:inline-block;margin-top:22px;padding:14px 26px;border-radius:999px;background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1a1405;font-weight:800;text-decoration:none}
+.cta:hover{filter:brightness(1.07)}
+.hero p{position:relative;max-width:560px;margin:0 auto;color:#d9d0bb;font-size:18px}
+
+/* menu */
+nav{position:sticky;top:0;z-index:20;background:rgba(12,11,9,.96);border-bottom:1px solid var(--gold-lo);backdrop-filter:blur(6px)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{flex:none;text-decoration:none;color:var(--fg);font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line)}
+nav a:hover,nav a:focus-visible{border-color:var(--gold);color:var(--gold-hi);outline:none}
+
+/* seções */
+section{padding:54px 0 6px}
+.kicker{font-family:var(--f-num);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-lo)}
+h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(34px,8vw,48px);line-height:1;margin:6px 0 14px}
+h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:24px;line-height:1.1;margin:30px 0 8px}
+p{margin:0 0 14px}
+.lead{font-size:19px;color:var(--ink2)}
+
+/* passos */
+.steps{list-style:none;counter-reset:s;padding:0;margin:18px 0}
+.steps li{counter-increment:s;position:relative;padding:4px 0 18px 58px;border-left:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:42px;height:42px;border-radius:50%;background:var(--ink);color:var(--gold-hi);font-family:var(--f-display);font-weight:900;font-size:24px;display:grid;place-items:center}
+.steps li::after{content:"";position:absolute;left:20px;top:46px;bottom:4px;width:2px;background:var(--rule)}
+.steps li:last-child::after{display:none}
+.steps b{display:block;font-size:18px}
+.steps span{color:var(--ink2)}
+
+/* caixas */
+.box{border:1px solid var(--rule);background:#fff;border-radius:14px;padding:18px 20px;margin:18px 0}
+.box.gold{border-color:var(--gold-lo);background:rgba(214,172,76,.1)}
+.box.warn{border-color:var(--bad);background:#fbefe9}
+.box h4{margin:0 0 6px;font-size:16px}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+.tag{display:inline-block;font-family:var(--f-num);font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:var(--ink);color:var(--gold-hi);padding:4px 10px;border-radius:999px;margin-bottom:8px}
+
+/* meus dados */
+.dados{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0 4px}
+@media(min-width:600px){.dados{grid-template-columns:1fr 1fr}}
+.dados label{display:block;font-size:14px;font-weight:700}
+.dados input{width:100%;margin-top:4px;font:inherit;font-size:16px;padding:11px 14px;border:1.5px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+.dados input:focus{outline:none;border-color:var(--gold)}
+
+/* prompt */
+.prompt{background:var(--bg);color:var(--fg);border:1px solid var(--gold-lo);border-radius:14px;overflow:hidden;margin:14px 0}
+.prompt-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--bg2)}
+.prompt-top span{font-family:var(--f-num);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.prompt pre{margin:0;padding:18px;white-space:pre-wrap;word-wrap:break-word;font-family:var(--f-num);font-size:14px;line-height:1.7;color:#eee6d3;max-height:420px;overflow:auto}
+.prompt.short pre{max-height:none;font-size:14px}
+.btn{font:inherit;font-weight:800;font-size:15px;cursor:pointer;border:0;border-radius:999px;padding:11px 22px;background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1a1405;min-height:44px}
+.btn:hover{filter:brightness(1.07)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.btn.ok{background:var(--ok);color:#fff}
+.btn.big{display:block;width:100%;margin-top:14px;font-size:17px;padding:15px}
+.minis{display:grid;gap:12px}
+
+/* listas bom/ruim */
+.pair{display:grid;gap:14px;margin:16px 0}
+@media(min-width:700px){.pair{grid-template-columns:1fr 1fr}}
+.col{border-radius:14px;padding:16px 18px;border:1px solid var(--rule);background:#fff}
+.col.good{border-top:4px solid var(--ok)}
+.col.bad{border-top:4px solid var(--bad)}
+.col h4{margin:0 0 8px;font-family:var(--f-display);font-size:22px;text-transform:uppercase}
+.col.good h4{color:var(--ok)}.col.bad h4{color:var(--bad)}
+.col ul{margin:0;padding-left:20px}
+.col li{margin-bottom:10px;font-size:16px}
+ul.plain{padding-left:22px}ul.plain li{margin-bottom:8px}
+
+/* abas de IA */
+.ia{border:1px solid var(--rule);background:#fff;border-radius:14px;padding:6px 20px 12px;margin:16px 0}
+details{border-top:1px solid var(--rule)}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:800;font-size:17px;padding:16px 28px 16px 0;list-style:none;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:26px;color:var(--gold-lo);font-weight:600}
+details[open]>summary::after{content:"–"}
+details>div{padding:0 0 14px}
+.faq{border:0}
+.faq details{border:1px solid var(--rule);background:#fff;border-radius:12px;margin-bottom:10px;padding:0 18px}
+.faq details:first-of-type{border-top:1px solid var(--rule)}
+
+footer{background:var(--bg);color:var(--muted);text-align:center;padding:36px 0 44px;margin-top:60px;font-size:14px}
+footer b{color:var(--gold-hi)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);background:var(--ink);color:var(--gold-hi);padding:12px 20px;border-radius:999px;font-weight:700;font-size:15px;opacity:0;pointer-events:none;transition:.25s;z-index:40}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="logo" role="img" aria-label="MSP Mentoria para Concursos">
+      <div class="logo-msp">MSP</div>
+      <div class="logo-sub">Mentoria para concursos</div>
+      <div class="logo-rule" aria-hidden="true"><span></span>
+        <svg viewBox="0 0 24 24"><path d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.6l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" fill="#f4d27c"/></svg>
+      <span></span></div>
+    </div>
+    <div class="eyebrow">Guia do aluno</div>
+    <h1>Tire suas dúvidas a qualquer hora</h1>
+    <p>Ficou travado em uma matéria? Aqui você aprende a usar a inteligência artificial como um professor particular, de dia, de noite, pelo celular.</p>
+    <a class="cta" href="../professores/">Abrir os Professores Virtuais</a>
+  </div>
+</header>
+
+<nav aria-label="Seções">
+  <div class="wrap">
+    <a href="../professores/">Professores Virtuais</a>
+    <a href="#comecar">Como funciona</a>
+    <a href="#prompt">O prompt</a>
+    <a href="#onde">Onde colar</a>
+    <a href="#perguntar">O que perguntar</a>
+    <a href="#regras">Avisos</a>
+    <a href="#faq">Perguntas</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="comecar">
+  <div class="kicker">Comece por aqui</div>
+  <h2>Como funciona</h2>
+  <p class="lead">É simples. São só três passos, e você faz uma vez só.</p>
+  <ol class="steps">
+    <li><b>Copie o prompt</b><span>Prompt é o texto de instruções que você manda para a IA. Ele ensina a IA a responder do jeito certo para quem estuda para concurso.</span></li>
+    <li><b>Abra uma IA e cole</b><span>Recomendamos o NotebookLM, do Google. É grátis e você pode colocar o PDF do seu curso nele. Também ensinamos o ChatGPT e o Gemini.</span></li>
+    <li><b>Faça sua pergunta</b><span>Escreva a dúvida como se estivesse falando com um professor. A resposta vem na hora, com artigo de lei, exemplo e questões para treinar.</span></li>
+  </ol>
+  <div class="box gold"><h4>Quer o pedido pronto para cada matéria?</h4><p>Nos <a href="../professores/"><b>Professores Virtuais</b></a> você escolhe a matéria e o jeito de estudar (aula do zero, simulado, cartas de revisão, mapa mental, caderno de erros) e o pedido já sai montado.</p></div>
+  <div class="box gold"><h4>Dá para fazer tudo pelo celular</h4><p>Você não precisa de computador. Todos os passos abaixo funcionam no navegador do celular ou no aplicativo.</p></div>
+</section>
+
+<section id="prompt">
+  <div class="kicker">Passo 1</div>
+  <h2>O prompt principal</h2>
+  <p>Antes de copiar, preencha seus dados abaixo. Eles entram no prompt sozinhos. Se preferir, pode deixar em branco: a IA vai perguntar.</p>
+
+  <div class="dados">
+    <label>Matéria que estou estudando<input id="d-materia" placeholder="Ex.: Direito Penal" autocomplete="off"></label>
+    <label>Banca<input id="d-banca" placeholder="Ex.: Cebraspe" autocomplete="off"></label>
+    <label>Cargo ou concurso<input id="d-cargo" placeholder="Ex.: Policial Rodoviário Federal" autocomplete="off"></label>
+    <label>Meu nível<input id="d-nivel" placeholder="Ex.: iniciante" autocomplete="off"></label>
+  </div>
+
+  <div class="prompt" id="p-main">
+    <div class="prompt-top"><span>Prompt principal</span><button class="btn" data-copy="#t-main">Copiar</button></div>
+    <pre id="t-main"></pre>
+  </div>
+  <button class="btn big" data-copy="#t-main">Copiar o prompt</button>
+
+  <h3>Prompts de apoio</h3>
+  <p>São opcionais. Use depois do principal, quando precisar.</p>
+  <div class="minis">
+    <div class="prompt short"><div class="prompt-top"><span>Explicar do zero</span><button class="btn" data-copy="#t-m1">Copiar</button></div>
+      <pre id="t-m1">Explique esse assunto como se eu tivesse 12 anos. Use palavras simples e um exemplo do dia a dia. Depois mostre como esse assunto aparece na prova.</pre></div>
+    <div class="prompt short"><div class="prompt-top"><span>Fazer um resumo</span><button class="btn" data-copy="#t-m2">Copiar</button></div>
+      <pre id="t-m2">Faça um resumo desse assunto em tópicos curtos, só com o que mais cai em prova. Coloque o artigo de lei de cada ponto importante e termine com uma lista de pegadinhas comuns da banca.</pre></div>
+    <div class="prompt short"><div class="prompt-top"><span>Corrigir minha resposta</span><button class="btn" data-copy="#t-m3">Copiar</button></div>
+      <pre id="t-m3">Vou escrever o que eu entendi sobre o assunto. Corrija com calma: diga o que está certo, o que está errado e o que faltou. Explique cada erro e cite o artigo de lei correto.</pre></div>
+  </div>
+</section>
+
+<section id="onde">
+  <div class="kicker">Passo 2</div>
+  <h2>Onde colar o prompt</h2>
+  <p class="lead">Escolha uma das opções. Se estiver em dúvida, vá de NotebookLM.</p>
+
+  <div class="box gold">
+    <span class="tag">Mais indicado</span>
+    <h3 style="margin-top:0">NotebookLM (Google)</h3>
+    <p>É a melhor opção para você porque responde <b>com base no seu material</b>. Você coloca o PDF do curso e ele consulta o PDF para responder. Isso reduz muito o risco de erro. É grátis.</p>
+    <ol class="steps">
+      <li><b>Crie uma conta Google (se ainda não tem)</b><span>Acesse <a href="https://accounts.google.com/signup" target="_blank" rel="noopener">accounts.google.com/signup</a>. Preencha nome, data de nascimento e escolha um e-mail novo do Gmail com uma senha. Se você já tem Gmail ou usa Android, já tem conta: pule este passo.</span></li>
+      <li><b>Baixe o PDF do seu material na Tutory</b><span>Entre na Tutory, abra a matéria e o assunto que quer estudar, e baixe o PDF. Guarde no celular ou no computador.</span></li>
+      <li><b>Abra o NotebookLM</b><span>No navegador, acesse <a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> e entre com sua conta Google.</span></li>
+      <li><b>Crie um caderno</b><span>Toque em <em>Criar novo caderno</em> (ou <em>Novo</em>). Dê um nome, por exemplo: Direito Penal.</span></li>
+      <li><b>Adicione o PDF como fonte</b><span>Na janela que abrir, escolha <em>Upload de arquivo</em> (ou <em>Adicionar fonte</em>) e selecione o PDF que você baixou. Espere carregar.</span></li>
+      <li><b>Cole o prompt</b><span>Toque no ícone de lápis ou em <em>Configurar chat</em> e cole o prompt nas instruções. Se não achar essa opção, cole o prompt como sua primeira mensagem no chat.</span></li>
+      <li><b>Pergunte</b><span>Agora é só escrever sua dúvida no chat. Para outra matéria, crie outro caderno com outro PDF.</span></li>
+    </ol>
+  </div>
+
+  <h3>Outras opções</h3>
+  <div class="ia">
+    <details>
+      <summary>ChatGPT (OpenAI)</summary>
+      <div>
+        <ol class="plain">
+          <li>Acesse <a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a> ou baixe o aplicativo ChatGPT.</li>
+          <li>Toque em <em>Cadastre-se</em>. Pode entrar com sua conta Google ou criar com e-mail e senha.</li>
+          <li>Confirme seu e-mail e informe nome e data de nascimento.</li>
+          <li>Abra uma conversa nova e cole o prompt principal, já com seus dados: matéria, banca, cargo e nível.</li>
+          <li>Se quiser usar o PDF, toque no <em>+</em> ao lado da mensagem e anexe o arquivo. A versão grátis tem limite de arquivos por dia.</li>
+        </ol>
+      </div>
+    </details>
+    <details>
+      <summary>Gemini (Google)</summary>
+      <div>
+        <ol class="plain">
+          <li>Acesse <a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> ou baixe o aplicativo Gemini.</li>
+          <li>Entre com sua conta Google. Se não tiver, crie como no passo do NotebookLM.</li>
+          <li>Abra uma conversa nova e cole o prompt principal, já com seus dados: matéria, banca, cargo e nível.</li>
+          <li>Para usar o PDF, toque no <em>+</em> e anexe o arquivo antes de fazer a pergunta.</li>
+        </ol>
+      </div>
+    </details>
+  </div>
+  <p>Em qualquer uma delas, cole o prompt <b>uma vez no começo da conversa</b>. Se abrir uma conversa nova, cole de novo.</p>
+</section>
+
+<section id="perguntar">
+  <div class="kicker">Passo 3</div>
+  <h2>O que perguntar e o que não perguntar</h2>
+  <p class="lead">Quanto mais clara a pergunta, melhor a resposta.</p>
+
+  <div class="pair">
+    <div class="col good"><h4>Pergunte assim</h4>
+      <ul>
+        <li>“Não entendi a diferença entre dolo e culpa. Explique com um exemplo de trânsito.”</li>
+        <li>“Qual artigo trata da legítima defesa? Mostre o que a lei exige para ela existir.”</li>
+        <li>“Faça 3 questões no estilo Cebraspe sobre atos administrativos e explique o gabarito.”</li>
+        <li>“Segundo o PDF que enviei, quais são os requisitos do ato administrativo?”</li>
+        <li>“Escrevi minha resposta abaixo. Pode corrigir?”</li>
+      </ul></div>
+    <div class="col bad"><h4>Evite assim</h4>
+      <ul>
+        <li>“Qual vai ser a questão da prova?” Ninguém sabe, e a IA vai chutar.</li>
+        <li>“Qual o número da súmula sobre isso?” Pode vir número errado. Peça o assunto e depois confira.</li>
+        <li>“Me explica tudo de Direito Penal.” Muito grande. Peça um assunto por vez.</li>
+        <li>“Resolve minha prova inteira.” Você não aprende assim.</li>
+        <li>Colar seus dados pessoais, CPF, senhas ou dados de pagamento.</li>
+      </ul></div>
+  </div>
+
+  <h3>Dicas que fazem diferença</h3>
+  <ul class="plain">
+    <li><b>Use o PDF do curso como fonte principal.</b> Ele foi feito para o seu concurso, então a resposta fica mais certa.</li>
+    <li><b>Uma dúvida por vez.</b> Se a resposta ficar confusa, pergunte de novo com outras palavras.</li>
+    <li><b>Diga o que você já sabe.</b> Assim a IA não explica o que você já domina.</li>
+    <li><b>Peça o artigo de lei e confira.</b> Abra a lei seca e leia o artigo indicado. Leva um minuto.</li>
+    <li><b>Responda as questões de fixação</b> que a IA mandar. É o que faz você gravar.</li>
+  </ul>
+</section>
+
+<section id="regras">
+  <div class="kicker">Leia com atenção</div>
+  <h2>Regras de uso e avisos</h2>
+  <div class="box warn">
+    <h4>A IA pode errar</h4>
+    <p>Ela escreve com muita segurança, mesmo quando está errada. Por isso, <b>sempre confira o artigo na lei seca</b> antes de decorar qualquer coisa.</p>
+  </div>
+  <ul class="plain">
+    <li><b>Não substitui o professor.</b> Ela ajuda a tirar dúvidas rápidas. Aulas, material e mentoria continuam sendo a base do seu estudo.</li>
+    <li><b>Dúvida grande? Fale com a gente.</b> Se a resposta da IA não bateu com o material, pergunte ao professor ou à equipe.</li>
+    <li><b>Não confie em número.</b> Artigo, súmula, lei e data: confira sempre no texto oficial.</li>
+    <li><b>Proteja seus dados.</b> Nunca escreva senha, CPF, endereço ou dados do cartão.</li>
+    <li><b>Não compartilhe o material do curso</b> em ferramentas públicas ou com outras pessoas. Ele é só seu.</li>
+    <li><b>Use para aprender, não para copiar.</b> Tente responder primeiro, depois peça a correção.</li>
+  </ul>
+</section>
+
+<section id="faq">
+  <div class="kicker">Ainda com dúvida?</div>
+  <h2>Perguntas rápidas</h2>
+  <div class="faq">
+    <details><summary>Preciso pagar alguma coisa?</summary><div><p>Não. NotebookLM, ChatGPT e Gemini têm versão grátis, que já resolve para estudar. Existem planos pagos, mas você não precisa deles.</p></div></details>
+    <details><summary>Funciona no celular?</summary><div><p>Sim. Pode usar o navegador ou baixar o aplicativo da IA que escolher. O NotebookLM funciona direto no navegador do celular.</p></div></details>
+    <details><summary>A IA respondeu algo diferente do meu material. E agora?</summary><div><p>Siga o material do curso e confira na lei seca. Se continuar em dúvida, mande a pergunta para o professor ou para a equipe.</p></div></details>
+    <details><summary>Preciso colar o prompt toda vez?</summary><div><p>No NotebookLM, só uma vez por caderno, nas instruções. No ChatGPT e no Gemini, cole no começo de cada conversa nova.</p></div></details>
+    <details><summary>Qual IA é melhor?</summary><div><p>Para estudar com o seu material, o NotebookLM. Para conversar sobre qualquer assunto, o ChatGPT ou o Gemini. Teste e use a que achar mais fácil.</p></div></details>
+    <details><summary>A IA pode dizer “não sei”?</summary><div><p>Pode, e isso é bom. O prompt manda a IA avisar quando não tiver certeza, em vez de inventar. Se isso acontecer, procure o artigo na lei ou fale com o professor.</p></div></details>
+    <details><summary>Posso mandar minhas questões erradas para ela?</summary><div><p>Pode, e é uma ótima ideia. Cole a questão e o gabarito e peça: “explique por que errei e como não errar de novo”.</p></div></details>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap"><b>MSP</b> · Mentoria para concursos<br>Bons estudos!</div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite">Copiado!</div>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var base =
+"Você é um professor experiente de concursos policiais (PRF, PF, PC, PM e outros). Vai me ajudar a tirar dúvidas e a estudar.\n\n"+
+"@DADOS@\n\n"+
+"COMO RESPONDER\n"+
+"1. Use linguagem simples, como se explicasse para quem está começando. Frases curtas.\n"+
+"2. Explique passo a passo, em partes pequenas.\n"+
+"3. Cite o dispositivo de lei (lei, artigo, parágrafo e inciso) em que a resposta se baseia.\n"+
+"4. Dê pelo menos um exemplo prático.\n"+
+"5. Aponte como a banca costuma cobrar esse assunto e quais são as pegadinhas mais comuns.\n"+
+"6. Termine sempre com 1 ou 2 questões de fixação no estilo da banca (Cebraspe, FGV, Vunesp ou a que eu informei). Só mostre o gabarito e a explicação depois que eu responder.\n\n"+
+"REGRAS QUE VOCÊ NUNCA PODE QUEBRAR\n"+
+"- Se não souber ou não tiver certeza, diga “não sei” ou “não tenho certeza”. Não chute.\n"+
+"- Nunca invente artigo de lei, número de súmula, jurisprudência ou entendimento de tribunal. Se não tiver certeza do número, descreva o assunto e peça para eu conferir no texto oficial.\n"+
+"- Se eu enviei um material (PDF), use esse material como fonte principal e diga em qual parte você encontrou a resposta. Se a resposta não estiver nele, avise.\n"+
+"- Se faltar a matéria, a banca ou o cargo para responder bem, pergunte antes de responder.\n"+
+"- Não adivinhe o que vai cair na prova.\n"+
+"- Se minha pergunta estiver confusa, peça para eu explicar melhor.\n\n"+
+"Se tiver entendido, responda só: “Pronto. Qual é a sua dúvida?”";
+
+  function dados(){
+    var m=$('#d-materia').value.trim(),b=$('#d-banca').value.trim(),c=$('#d-cargo').value.trim(),n=$('#d-nivel').value.trim();
+    if(!(m||b||c||n)) return "MEUS DADOS\nAinda não informei matéria, banca, cargo e nível. Pergunte isso a mim antes da primeira resposta.";
+    var l=["MEUS DADOS"];
+    l.push("- Matéria: "+(m||"vou informar nas perguntas"));
+    l.push("- Banca: "+(b||"ainda não sei"));
+    l.push("- Cargo ou concurso: "+(c||"concurso policial em geral"));
+    l.push("- Meu nível: "+(n||"iniciante"));
+    return l.join("\n");
+  }
+  function render(){ $('#t-main').textContent = base.replace('@DADOS@', dados()); }
+  ['#d-materia','#d-banca','#d-cargo','#d-nivel'].forEach(function(s){$(s).addEventListener('input',render)});
+  render();
+
+  var toast=$('#toast'),tt;
+  function aviso(t){toast.textContent=t;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},1800)}
+  function copiar(txt){
+    if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(txt)}
+    return new Promise(function(ok,err){
+      var a=document.createElement('textarea');a.value=txt;a.style.position='fixed';a.style.opacity='0';
+      document.body.appendChild(a);a.focus();a.select();
+      try{document.execCommand('copy')?ok():err()}catch(e){err(e)}
+      document.body.removeChild(a);
+    });
+  }
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var txt=$(b.getAttribute('data-copy')).textContent, orig=b.textContent;
+      copiar(txt).then(function(){
+        b.classList.add('ok');b.textContent='Copiado!';aviso('Copiado! Agora é só colar na IA.');
+        setTimeout(function(){b.classList.remove('ok');b.textContent=orig},2000);
+      }).catch(function(){
+        var el=$(b.getAttribute('data-copy')),r=document.createRange();r.selectNodeContents(el);
+        var sel=window.getSelection();sel.removeAllRanges();sel.addRange(r);
+        aviso('Texto selecionado. Toque em Copiar no menu do celular.');
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
