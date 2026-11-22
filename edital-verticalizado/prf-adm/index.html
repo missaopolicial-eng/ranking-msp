@@ -458,6 +458,42 @@ input,select,textarea{color-scheme:dark;}
 ::-webkit-scrollbar-thumb{background:var(--gold-lo);}
 code{background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--gold-hi);}
 @media(max-width:900px){.page-title{font-size:20px;}}
+
+/* ═══ UPSELL MENTORIA ═══ */
+.tab-mentoria{color:var(--gold-hi)!important;font-weight:800;}
+.tab-mentoria.active{color:var(--ink)!important;}
+.nav-mentoria{border:1px solid var(--gold-lo);background:linear-gradient(135deg,rgba(214,172,76,.16),rgba(214,172,76,.04));color:var(--gold-hi);margin:6px 0 4px;}
+.up-banner{display:flex;align-items:center;gap:14px;cursor:pointer;padding:14px 18px;border:1px solid var(--gold);border-radius:14px;background:linear-gradient(90deg,rgba(214,172,76,.2),rgba(214,172,76,.04));transition:transform .15s,box-shadow .15s;}
+.up-banner:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(214,172,76,.15);}
+.up-banner-ico{font-size:26px;flex-shrink:0;}
+.up-banner-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:14px;color:var(--text);}
+.up-banner-txt span{font-size:12px;color:var(--text-mid);}
+.up-banner-go{flex-shrink:0;background:var(--gold);color:var(--ink);font-weight:800;font-size:12px;padding:8px 14px;border-radius:99px;}
+.up-hero{position:relative;overflow:hidden;text-align:center;padding:34px 22px;border:1px solid var(--gold-lo);border-radius:18px;background:radial-gradient(closest-side at 50% 0,rgba(214,172,76,.22),transparent 75%),var(--card);}
+.up-eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:800;}
+.up-h{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,5.2vw,52px);line-height:1;margin:12px 0 14px;background:linear-gradient(180deg,#fff7e2,var(--gold-hi) 45%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.up-sub{max-width:640px;margin:0 auto 18px;font-size:14px;line-height:1.6;color:var(--text-mid);}
+.up-cta-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.up-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:99px;font-weight:800;font-size:13px;text-decoration:none;background:var(--gold);color:var(--ink);border:1.5px solid var(--gold);transition:background .15s;}
+.up-btn:hover{background:var(--gold-hi);}
+.up-btn.ghost{background:transparent;color:var(--gold-hi);border-color:var(--gold-lo);}
+.up-btn.ghost:hover{background:rgba(214,172,76,.1);}
+.up-video{position:relative;width:100%;max-width:860px;margin:0 auto;aspect-ratio:16/9;border:1px solid var(--gold-lo);border-radius:14px;overflow:hidden;background:#000;}
+.up-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.up-video-cap{max-width:860px;margin:8px auto 0;text-align:center;font-size:12px;color:var(--text-soft);}
+.up-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
+.up-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:16px;}
+.up-card-i{font-size:24px;}
+.up-card-t{font-family:var(--f-display);font-weight:900;font-size:22px;text-transform:uppercase;color:var(--gold-hi);margin:6px 0 4px;}
+.up-card-d{font-size:13px;line-height:1.5;color:var(--text-mid);}
+.up-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
+.up-step{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.5;color:var(--text-mid);}
+.up-step b{color:var(--text);}
+.up-step>span{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--ink);font-weight:900;display:grid;place-items:center;}
+.up-contact{text-align:center;padding:26px 18px;border:1px solid var(--gold);border-radius:16px;background:linear-gradient(180deg,rgba(214,172,76,.14),rgba(214,172,76,.03));}
+.up-contact-t{font-family:var(--f-display);font-weight:900;font-size:30px;text-transform:uppercase;color:var(--gold-hi);}
+.up-contact-s{font-size:13px;color:var(--text-mid);margin:2px 0 16px;}
+@media(max-width:760px){.up-banner{flex-wrap:wrap;}.up-banner-go{width:100%;text-align:center;}}
 </style>
 </head>
 <body>
@@ -484,6 +520,7 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--gold-hi)
     <a class="nav-item" href="#" onclick="switchTab('revisoes');return false;">🔁 &nbsp;Revisões</a>
     <a class="nav-item" href="#" onclick="switchTab('historico');return false;">📅 &nbsp;Histórico</a>
     <a class="nav-item" href="#" onclick="switchTab('constancia');return false;">🔥 &nbsp;Constância</a>
+    <a class="nav-item nav-mentoria" href="#" onclick="switchTab('mentoria');return false;">⭐ &nbsp;Conheça a Mentoria MSP</a>
     <div class="sb-nav-lbl" style="margin-top:14px">Disciplinas</div>
     <div id="nav-discs"></div>
   </nav>
@@ -510,6 +547,7 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--gold-hi)
         <button class="tab-btn" onclick="switchTab('revisoes')">🔁 Revisões</button>
         <button class="tab-btn" onclick="switchTab('historico')">📅 Histórico</button>
         <button class="tab-btn" onclick="switchTab('constancia')">🔥 Constância</button>
+        <button class="tab-btn tab-mentoria" onclick="switchTab('mentoria')">⭐ Mentoria</button>
       </div>
       <div class="strip-actions">
         <button class="btn btn-ghost" id="btn-expand" onclick="expandAll()" style="display:none">↕ Expandir</button>
@@ -553,6 +591,13 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--gold-hi)
 
     <!-- FRASE MOTIVACIONAL -->
     <div class="frase-motiv"><div class="frase-motiv-icon">💬</div><div class="frase-motiv-txt" id="frase-motiv-estudos"></div></div>
+
+    <!-- BANNER MENTORIA -->
+    <div class="up-banner" onclick="switchTab('mentoria')" role="button" tabindex="0">
+      <div class="up-banner-ico">⭐</div>
+      <div class="up-banner-txt"><b>Estudar sozinho cansa. Estudar com direção, aprova.</b><span>Veja por dentro a Mentoria MSP: plano com metas diárias, acompanhamento semanal e Ranking.</span></div>
+      <div class="up-banner-go">Conhecer →</div>
+    </div>
 
     <!-- CRONÔMETRO + CALENDÁRIO -->
     <div>
@@ -884,6 +929,50 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--gold-hi)
 
     <div class="const-months-grid" id="const-months-grid"></div>
   </div>
+
+
+  <!-- PAGE: MENTORIA (UPSELL) -->
+  <div class="page" id="page-mentoria">
+    <div class="up-hero">
+      <div class="up-eyebrow">Mentoria MSP · PRF Agente Administrativo</div>
+      <h2 class="up-h">Você não precisa de mais material.<br>Precisa de alguém olhando para o seu estudo.</h2>
+      <p class="up-sub">Este edital organiza o <i>que</i> estudar. A mentoria cuida do <i>como</i>: plano individual, cobrança semanal e comunidade que puxa para cima — até a posse.</p>
+      <div class="up-cta-row"><a class="up-btn" href="https://wa.me/5561991847910?text=Ol%C3%A1%21%20Vi%20o%20edital%20verticalizado%20do%20MSP%20%28PRF%20Agente%20Administrativo%29%20e%20quero%20saber%20mais%20sobre%20a%20Mentoria." target="_blank" rel="noopener">💬 Quero aplicar para a mentoria</a><a class="up-btn ghost" href="https://youtu.be/IIMTd_mUaZ4" target="_blank" rel="noopener">▶ Ver no YouTube</a></div>
+    </div>
+
+    <div>
+      <div class="sec-lbl">🎬 Veja por dentro</div>
+      <div class="up-video"><iframe src="https://www.youtube-nocookie.com/embed/IIMTd_mUaZ4" title="Conheça a Mentoria MSP" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="up-video-cap">Veja como a mentoria funciona e como o cronograma é montado em cima das suas horas.</div>
+    </div>
+
+    <div>
+      <div class="sec-lbl">🧭 O que tem dentro</div>
+      <div class="up-grid">
+        <div class="up-card"><div class="up-card-i">🎯</div><div class="up-card-t">Plano individual</div><div class="up-card-d">Metas de cada dia, montadas em cima da sua rotina e das horas que você realmente tem.</div></div>
+        <div class="up-card"><div class="up-card-i">📞</div><div class="up-card-t">Acompanhamento semanal</div><div class="up-card-d">Alguém confere o que você fez, ajusta a rota pelo seu desempenho nos simulados e cobra constância.</div></div>
+        <div class="up-card"><div class="up-card-i">🏆</div><div class="up-card-t">Ranking MSP</div><div class="up-card-d">Comunidade e ranking semanal: você vê onde está e é puxado para cima pelo grupo.</div></div>
+        <div class="up-card"><div class="up-card-i">📚</div><div class="up-card-t">Todo o material da esteira</div><div class="up-card-d">Cadernos, simulados e manuais do MSP inclusos, sem comprar nada separado.</div></div>
+        <div class="up-card"><div class="up-card-i">🤖</div><div class="up-card-t">Tutor Virtual 24h</div><div class="up-card-d">Professor-robô para tirar dúvida a qualquer hora, sem limite.</div></div>
+        <div class="up-card"><div class="up-card-i">✅</div><div class="up-card-t">Edital sob controle</div><div class="up-card-d">Seu progresso neste edital vira ponto de partida do plano — nada de começar do zero.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-lbl">🚀 Como começar</div>
+      <div class="up-steps">
+        <div class="up-step"><span>1</span><div><b>Diagnóstico gratuito</b><br>A equipe MSP entende sua rotina, seu nível e seu objetivo.</div></div>
+        <div class="up-step"><span>2</span><div><b>Plano montado com você</b><br>Metas diárias realistas para o seu tempo disponível.</div></div>
+        <div class="up-step"><span>3</span><div><b>Acompanhamento até a posse</b><br>Cobrança semanal, ranking e ajuste de rota.</div></div>
+      </div>
+    </div>
+
+    <div class="up-contact">
+      <div class="up-contact-t">Fale com a equipe MSP</div>
+      <div class="up-contact-s">O valor é apresentado no diagnóstico, de acordo com o seu plano.</div>
+      <div class="up-cta-row"><a class="up-btn" href="https://wa.me/5561991847910?text=Ol%C3%A1%21%20Vi%20o%20edital%20verticalizado%20do%20MSP%20%28PRF%20Agente%20Administrativo%29%20e%20quero%20saber%20mais%20sobre%20a%20Mentoria." target="_blank" rel="noopener">💬 Quero aplicar para a mentoria</a><a class="up-btn ghost" href="https://www.instagram.com/missaopolicial/" target="_blank" rel="noopener">📸 Instagram @missaopolicial</a><a class="up-btn ghost" href="https://youtu.be/IIMTd_mUaZ4" target="_blank" rel="noopener">▶ YouTube</a></div>
+    </div>
+  </div><!-- /page-mentoria -->
 
 </div><!-- /content -->
 
@@ -1527,7 +1616,7 @@ function switchTab(tab) {
   document.getElementById('page-' + tab).classList.add('active');
   document.querySelectorAll('.tab-btn').forEach(b => {
     const t = b.textContent.toLowerCase();
-    if ((tab==='estudos'&&t.includes('estudo'))||(tab==='edital'&&t.includes('edital'))||(tab==='revisoes'&&t.includes('revis'))||(tab==='historico'&&t.includes('hist'))||(tab==='constancia'&&t.includes('constânc'))) b.classList.add('active');
+    if ((tab==='estudos'&&t.includes('estudo'))||(tab==='edital'&&t.includes('edital'))||(tab==='revisoes'&&t.includes('revis'))||(tab==='historico'&&t.includes('hist'))||(tab==='constancia'&&t.includes('constânc'))||(tab==='mentoria'&&t.includes('mentoria'))) b.classList.add('active');
   });
   document.getElementById('btn-expand').style.display  = tab==='edital' ? '' : 'none';
   document.getElementById('btn-collapse').style.display = tab==='edital' ? '' : 'none';
@@ -1536,6 +1625,7 @@ function switchTab(tab) {
   if (tab==='revisoes')    renderRevisoes();
   if (tab==='estudos')     renderCharts();
   if (tab==='constancia')  renderConstancia();
+  window.scrollTo(0,0);
 }
 
 function scrollToId(id) {
