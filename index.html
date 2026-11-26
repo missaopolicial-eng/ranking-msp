@@ -440,10 +440,9 @@ function delta(r){
   return `<span class="d eq">=</span>`;
 }
 const PATENTES = [
-  [0,"Recruta","ponto",1],[10,"Soldado","divisa",1],[20,"Cabo","divisa",2],[30,"3º Sargento","divisa",3],
-  [40,"2º Sargento","divisa",4],[50,"1º Sargento","divisa",5],[60,"Subtenente","triangulo",1],
-  [70,"2º Tenente","estrela","s"],[75,"1º Tenente","estrela","ss"],[80,"Capitão","estrela","sss"],
-  [90,"Major","estrela","gss"],[100,"Coronel","estrela","ggg"]];
+  [0,"Recruta","ponto",1],[10,"Soldado","divisa",1],[25,"Cabo","divisa",2],[40,"3º Sargento","divisa",3],
+  [55,"Subtenente","triangulo",1],[70,"2º Tenente","estrela","s"],[75,"1º Tenente","estrela","ss"],
+  [80,"Capitão","estrela","sss"],[85,"Major","estrela","gss"],[90,"Coronel","estrela","ggg"]];
 function patenteDe(p){ let i=0; PATENTES.forEach((x,k)=>{ if (p>=x[0]) i=k; }); return i; }
 function insignia(i){
   const [, nome, tipo, q] = PATENTES[i];
@@ -466,7 +465,7 @@ function proxPatente(p){
 function tabelaPatentes(){
   $("grad").innerHTML = PATENTES.map((x,i)=>{
     const n = PATENTES[i+1];
-    const faixa = n ? `${x[0]}% a ${pct(n[0]-0.1)}%` : "100%";
+    const faixa = n ? `${x[0]}% a ${pct(n[0]-0.1)}%` : `${x[0]}% ou mais`;
     return `<div class="pcard"><div class="box">${insignia(i)}</div><div class="t">${x[1]}</div><p>${faixa}</p></div>`;
   }).join("");
 }
